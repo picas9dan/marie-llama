@@ -18,10 +18,10 @@
 1. Install the remaining packages required by the project.
 
    ````
-   pip install -r requirements
+   pip install -r requirements.txt
    ````
 1. Update the following environment variables.
-   - `HF_HOME`: Cache directory for Hugging Face models and datasets. For jobs running on CSD3, this should be set to `/home/<CRSid>/rds/hpc-work/.cache/huggingface`
+   
    - `HF_ACCESS_TOKEN`: [Access token](https://huggingface.co/docs/hub/security-tokens) with the read privilege to access any model that is not public on Hugging Face, if needed.
    ```
    export HF_HOME="<huggingface-cache-dir>"
@@ -50,3 +50,8 @@ python finetune.py
 ```
 
 ## Evaluation
+
+
+## Running jobs on CSD3
+As per recommendation by 
+ `HF_HOME`: Cache directory for Hugging Face models and datasets. For jobs running on CSD3, this should be set to `/home/<CRSid>/rds/hpc-work/.cache/huggingface`.
