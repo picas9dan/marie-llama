@@ -129,36 +129,14 @@ def get_model(model_args: ModelArgs, train_args: TrainArgs, checkpoint_dir: str)
     return model
 
 
-def get_tokenizer(
-    base_model: str, 
-    # model: transformers.PreTrainedModel
-):
-    tokenizer = LlamaTokenizer.from_pretrained(
-        base_model,
-        padding_side="right",
-        use_fast=False,
-        use_auth_token=True
-    )
+def prepare_llama2(model: LlamaForCausalLM, tokenizer: LlamaTokenizer):
+    # Issue 1: vocab_size mismatch
+    # https://github.com/huggingface/transformers/issues/24899
 
-    assert tokenizer._pad_token is not None
-
-    # LLaMA tokenizer may not have correct special tokens set.
-    # Check and add them if missing to prevent them from being parsed into different tokens.
-    # Note that these are present in the vocabulary.
-    # Note also that `model.config.pad_token_id` is 0 which corresponds to `<unk>` token.
-    # tokenizer.add_special_tokens({
-    #     "eos_token": tokenizer.convert_ids_to_tokens(model.config.eos_token_id),
-    #     "bos_token": tokenizer.convert_ids_to_tokens(model.config.bos_token_id),
-    #     "unk_token": tokenizer.convert_ids_to_tokens(model.config.pad_token_id),
-    # })
-    tokenizer.add_special_tokens(
-        {
-            "eos_token": "</s>",
-            "bos_token": "</s>",
-            "unk_token": "</s>",
-            "pad_token": '[PAD]',
-        }
-    )
+    # Issue 2: incorrect pad_token
+    # For the tokenizer, the special tokens (bos, eos, unk, pad) are set to be (<s>, </s>, <unk>, <unk>).
+    # tokenizer.decode([32000]) returns <pad>
+    tokenizer.add_special_tokens(dict(pad_token="<pad>"))
 
     return tokenizer
 
@@ -290,8 +268,16 @@ def train():
     model_args, data_args, train_args, gen_args = hfparser.parse_args_into_dataclasses()
     
     checkpoint_dir = get_last_checkpoint(train_args.output_dir)
+
     model = get_model(model_args, train_args, checkpoint_dir)
-    tokenizer = get_tokenizer(model_args.base_model)
+    tokenizer = LlamaTokenizer.from_pretrained(
+        model_args.base_model,
+        padding_side="right",
+        use_fast=False,
+        use_auth_token=True
+    )
+    prepare_llama2(model, tokenizer)
+
     data_module = get_data_module(data_args, train_args)
 
     trainer = Seq2SeqTrainer(
