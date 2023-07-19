@@ -7,17 +7,17 @@ import logging
 import os
 from typing import Dict, Sequence
 
-import bitsandbytes as bnb
 from datasets import load_dataset
 from peft import (
     get_peft_model, 
     LoraConfig, 
     PeftModel,
     prepare_model_for_kbit_training,
+    TaskType
 )
 from transformers import (
-    LlamaForCausalLM,
     BitsAndBytesConfig,
+    LlamaForCausalLM,
     LlamaTokenizer,
     Seq2SeqTrainer,
 )
@@ -26,7 +26,7 @@ from transformers.trainer_utils import PREFIX_CHECKPOINT_DIR
 import torch
 from torch.nn.utils.rnn import pad_sequence
 
-from .arguments_schema import DataArgs, GenArgs, ModelArgs, TrainArgs
+from arguments_schema import DataArgs, ModelArgs, TrainArgs
 
 
 logger = logging.getLogger(__name__)
@@ -99,7 +99,6 @@ def get_model(model_args: ModelArgs, train_args: TrainArgs, checkpoint_dir: str)
     
     model = LlamaForCausalLM.from_pretrained(
         model_args.base_model,
-        cache_dir=train_args,
         device_map="auto",
         quantization_config=bnb_config,
         torch_dtype=torch.bfloat16
@@ -114,12 +113,12 @@ def get_model(model_args: ModelArgs, train_args: TrainArgs, checkpoint_dir: str)
     else:
         print("Adding LoRA modules.")
         config = LoraConfig(
+            task_type=TaskType.CAUSAL_LM,
+            inference_mode=False,
             r=train_args.lora_r,
             lora_alpha=train_args.lora_alpha,
-            target_modules=["q_proj", "v_proj"],
             lora_dropout=train_args.lora_dropout,
-            bias="none",
-            task_type="CAUSAL_LM",
+            target_modules=["q_proj", "v_proj"],
         )
         model = get_peft_model(model, config)
 
@@ -130,12 +129,15 @@ def get_model(model_args: ModelArgs, train_args: TrainArgs, checkpoint_dir: str)
     return model
 
 
-def get_tokenizer(base_model: str, cache_dir: str, model: transformers.PreTrainedModel):
+def get_tokenizer(
+    base_model: str, 
+    # model: transformers.PreTrainedModel
+):
     tokenizer = LlamaTokenizer.from_pretrained(
         base_model,
-        cache_dir=cache_dir,
         padding_side="right",
         use_fast=False,
+        use_auth_token=True
     )
 
     assert tokenizer._pad_token is not None
@@ -144,11 +146,19 @@ def get_tokenizer(base_model: str, cache_dir: str, model: transformers.PreTraine
     # Check and add them if missing to prevent them from being parsed into different tokens.
     # Note that these are present in the vocabulary.
     # Note also that `model.config.pad_token_id` is 0 which corresponds to `<unk>` token.
-    tokenizer.add_special_tokens({
-        "eos_token": tokenizer.convert_ids_to_tokens(model.config.eos_token_id),
-        "bos_token": tokenizer.convert_ids_to_tokens(model.config.bos_token_id),
-        "unk_token": tokenizer.convert_ids_to_tokens(model.config.pad_token_id),
-    })
+    # tokenizer.add_special_tokens({
+    #     "eos_token": tokenizer.convert_ids_to_tokens(model.config.eos_token_id),
+    #     "bos_token": tokenizer.convert_ids_to_tokens(model.config.bos_token_id),
+    #     "unk_token": tokenizer.convert_ids_to_tokens(model.config.pad_token_id),
+    # })
+    tokenizer.add_special_tokens(
+        {
+            "eos_token": "</s>",
+            "bos_token": "</s>",
+            "unk_token": "</s>",
+            "pad_token": '[PAD]',
+        }
+    )
 
     return tokenizer
 
@@ -276,12 +286,12 @@ class SavePeftModelCallback(transformers.TrainerCallback):
 
 
 def train():
-    hfparser = transformers.HfArgumentParser((ModelArgs, DataArgs, TrainArgs, GenArgs))   
+    hfparser = transformers.HfArgumentParser((ModelArgs, DataArgs, TrainArgs))
     model_args, data_args, train_args, gen_args = hfparser.parse_args_into_dataclasses()
     
     checkpoint_dir = get_last_checkpoint(train_args.output_dir)
     model = get_model(model_args, train_args, checkpoint_dir)
-    tokenizer = get_tokenizer(model_args.base_model, train_args.cache_dir, model)
+    tokenizer = get_tokenizer(model_args.base_model)
     data_module = get_data_module(data_args, train_args)
 
     trainer = Seq2SeqTrainer(

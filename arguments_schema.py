@@ -11,6 +11,12 @@ class ModelArgs:
 
 @dataclass
 class DataArgs:
+    dataset: str = field(
+        metadata={"help": "Dataset to finetune on."}
+    )
+    dataset_format: str = field(
+        metadata={"help": "Dataset format used. [alpaca|self-instruct|marie]."}
+    )
     eval_dataset_size: int = field(default=1024)
     source_max_len: int = field(
         default=1024, # should be able to accommodate the longest input question
@@ -20,19 +26,13 @@ class DataArgs:
         default=256, # should be able to accommodate the longest SPARQL query 
         metadata={"help": "Maximum target sequence length. Sequences will be right padded (and possibly truncated)."},
     )
-    dataset: str = field(
-        metadata={"help": "Dataset to finetune on."}
-    )
-    dataset_format: str = field(
-        metadata={"help": "Dataset format used. [alpaca|self-instruct]."}
-    )
+
 
 @dataclass
 class TrainArgs(transformers.Seq2SeqTrainingArguments):
-    cache_dir: Optional[str] = field(default=None)
     batch_size: int = field(default=128)
     learning_rate: float = field(default=0.0002)
-    num_epochs: int
+    # num_epochs: int
     # quantization hyperparams
     bits: int = field(
         default=8,
