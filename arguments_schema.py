@@ -1,6 +1,4 @@
 from dataclasses import dataclass, field
-from typing import Dict, Sequence, Tuple, Optional
-import torch
 
 import transformers
 
@@ -31,8 +29,6 @@ class DataArgs:
 @dataclass
 class TrainArgs(transformers.Seq2SeqTrainingArguments):
     batch_size: int = field(default=128)
-    learning_rate: float = field(default=0.0002)
-    # num_epochs: int
     # quantization hyperparams
     bits: int = field(
         default=8,
