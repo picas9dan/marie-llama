@@ -1,14 +1,20 @@
 ## Installation
 
-The use of a virtual environment manager such as [conda](https://conda.io/projects/conda/en/latest/index.html) is recommended.
-
 ### Prerequisites
-- Linux OS
-  - As per [this issue](https://github.com/TimDettmers/bitsandbytes/issues/30), the bitsandbytes package is not supported on Windows.
-- `python==3.10`
+- Linux OS (recommended) . It is not advisable to run this project on Windows as [`bitsandbytes` is not supported on Windows]((https://github.com/TimDettmers/bitsandbytes/issues/30)).
+- [conda](https://conda.io/projects/conda/en/latest/index.html) (recommended).
+- `python==3.10`.
 
 ### Steps
-1. Install `torch==2.0.1+cu117` as per [official documentation](https://pytorch.org/get-started/locally/).
+1. Create a conda environment and activate it.
+   ```
+   conda create --name marie-llama python=3.10
+   conda activate marie-llama
+   ```
+1. Install `torch==2.0.1+cu118`.
+   ```
+   conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
+   ```
 1. Install the remaining packages required by the project.
 
    ````
