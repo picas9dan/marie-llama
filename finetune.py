@@ -2,6 +2,7 @@
 
 import copy
 from dataclasses import dataclass
+import datetime
 import json
 import logging
 import os
@@ -29,6 +30,12 @@ from torch.nn.utils.rnn import pad_sequence
 from arguments_schema import DataArgs, ModelArgs, TrainArgs
 
 
+logging.basicConfig(
+    filename=f"finetune_{datetime.today().strftime('%Y-%m-%d %H:%M:%S')}.log",
+    format="%(asctime)s {%(pathname)s:%(lineno)d} %(name)s %(levelname)s - %(message)s",
+    datefmt="%H:%M:%S",
+    level=logging.DEBUG
+)
 logger = logging.getLogger(__name__)
 
 
@@ -51,7 +58,7 @@ def get_last_checkpoint(output_dir: str):
         return None # first training
     
     if os.path.exists(os.path.join(output_dir, "completed")): 
-        print('Detected that training was already completed!')
+        logger.info('Detected that training was already completed!')
         return None
     
     max_step = 0
@@ -62,28 +69,9 @@ def get_last_checkpoint(output_dir: str):
         return None # training started, but no checkpoint
     
     checkpoint_dir = os.path.join(output_dir, f'checkpoint-{max_step}')
-    print(f"Found a previous checkpoint at: {checkpoint_dir}")
+    logger.info(f"Found a previous checkpoint at: {checkpoint_dir}")
 
     return checkpoint_dir # checkpoint found!
-    
-    
-def print_trainable_parameters(bits: int, model: transformers.PreTrainedModel):
-    """Prints the number of trainable parameters in the model."""
-    trainable_params = 0
-    all_param = 0
-    for _, param in model.named_parameters():
-        all_param += param.numel()
-        if param.requires_grad:
-            trainable_params += param.numel()
-
-    if bits == 4: 
-        trainable_params /= 2
-
-    print(
-        f"trainable params: {trainable_params} || "
-        f"all params: {all_param} || "
-        f"trainable: {100 * trainable_params / all_param}"
-    )
 
 
 def get_model(model_args: ModelArgs, train_args: TrainArgs, checkpoint_dir: str):
@@ -108,10 +96,10 @@ def get_model(model_args: ModelArgs, train_args: TrainArgs, checkpoint_dir: str)
     model.gradient_checkpointing_enable()
 
     if checkpoint_dir is not None:
-        print("Loading adapters from checkpoint.")
+        logger.info("Loading adapters from checkpoint.")
         model = PeftModel.from_pretrained(model, os.path.join(checkpoint_dir, "adapter_model"), is_trainable=True)
     else:
-        print("Adding LoRA modules.")
+        logger.info("Adding LoRA modules.")
         config = LoraConfig(
             task_type=TaskType.CAUSAL_LM,
             inference_mode=False,
@@ -123,8 +111,8 @@ def get_model(model_args: ModelArgs, train_args: TrainArgs, checkpoint_dir: str)
         model = get_peft_model(model, config)
 
     model.config.use_cache = False
-    print_trainable_parameters(model)
-    print("Loaded model.")
+    model.print_trainable_parameters()
+    logger.info("Loaded model.")
 
     return model
 
@@ -238,7 +226,7 @@ def get_data_module(data_args: DataArgs, train_args: TrainArgs, tokenizer: trans
 
 class SavePeftModelCallback(transformers.TrainerCallback):
     def save_model(self, args, state, kwargs):
-        print("Saving PEFT checkpoint...")
+        logger.info("Saving PEFT checkpoint...")
         if state.best_model_checkpoint is not None:
             checkpoint_folder = os.path.join(state.best_model_checkpoint, "adapter_model")
         else:
