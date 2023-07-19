@@ -20,11 +20,8 @@
    ````
    pip install -r requirements.txt
    ````
-1. Update the following environment variables.
-   
-   - `HF_ACCESS_TOKEN`: [Access token](https://huggingface.co/docs/hub/security-tokens) with the read privilege to access any model that is not public on Hugging Face, if needed.
+1. For access to a private model on Hugging Face, ensure that you have the read privilege to this model. Generate an [access token](https://huggingface.co/docs/hub/security-tokens) and add this to the environment variables.
    ```
-   export HF_HOME="<huggingface-cache-dir>"
    export HF_ACCESS_TOKEN="<huggingface-access-token>"
    ```
 
@@ -53,5 +50,7 @@ python finetune.py
 
 
 ## Running jobs on CSD3
-As per recommendation by 
- `HF_HOME`: Cache directory for Hugging Face models and datasets. For jobs running on CSD3, this should be set to `/home/<CRSid>/rds/hpc-work/.cache/huggingface`.
+Per [recommendation by CSD3](https://docs.hpc.cam.ac.uk/hpc/user-guide/io_management.html), I/O data should be placed under `/rds`. Cache for models and datasets should thus be placed here. Concretely, the Hugging Face cache directory should be set as follows.
+```
+export HF_HOME="/rds/user/nmdt2/hpc-work/.cache/huggingface"
+``` 
