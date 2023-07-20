@@ -20,7 +20,7 @@
    ````
    pip install -r requirements.txt
    ````
-1. For access to a private model on Hugging Face, ensure that you have the read privilege to this model. Generate an [access token](https://huggingface.co/docs/hub/security-tokens) and add this to the environment variables.
+1. For access to any private models or datasets on Hugging Face, ensure that you have the necessary read privileges. Generate an [access token](https://huggingface.co/docs/hub/security-tokens) and make this an environment variable.
    ```
    export HF_ACCESS_TOKEN="<huggingface-access-token>"
    ```

@@ -15,7 +15,6 @@ class DataArgs:
     dataset_format: str = field(
         metadata={"help": "Dataset format used. [alpaca|self-instruct|marie]."}
     )
-    eval_dataset_size: int = field(default=1024)
     source_max_len: int = field(
         default=1024, # should be able to accommodate the longest input question
         metadata={"help": "Maximum source sequence length. Sequences will be right padded (and possibly truncated)."}

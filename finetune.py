@@ -1,14 +1,10 @@
 # Adapted from https://github.com/artidoro/qlora/blob/main/qlora.py
 
-import copy
-from dataclasses import dataclass
-import datetime
+from datetime import datetime
 import json
 import logging
 import os
-from typing import Dict, Sequence
 
-from datasets import load_dataset
 from peft import (
     get_peft_model, 
     LoraConfig, 
@@ -25,9 +21,9 @@ from transformers import (
 import transformers
 from transformers.trainer_utils import PREFIX_CHECKPOINT_DIR
 import torch
-from torch.nn.utils.rnn import pad_sequence
 
 from arguments_schema import DataArgs, ModelArgs, TrainArgs
+from dataset_utils import get_data_module
 
 
 logging.basicConfig(
@@ -37,19 +33,6 @@ logging.basicConfig(
     level=logging.DEBUG
 )
 logger = logging.getLogger(__name__)
-
-
-IGNORE_INDEX = -100
-ALPACA_PROMPT = (
-    "Below is an instruction that describes a task, paired with an input that provides further context. "
-    "Write a response that appropriately completes the request.\n\n"
-    "### Instruction:\n{instruction}\n\n### Input:\n{input}\n\n### Response:"
-)
-MARIE_PROMPT = (
-    "Below is a natural language question posed to The World Avatar's question answering system. "
-    "Convert the question into a valid SPARQL query that can be made to The World Avatar's knowledge graphs.\n\n"
-    "### Question:\n{question}\n\n### SPARQL query:"
-)
 
 
 def get_last_checkpoint(output_dir: str):
@@ -89,7 +72,8 @@ def get_model(model_args: ModelArgs, train_args: TrainArgs, checkpoint_dir: str)
         model_args.base_model,
         device_map="auto",
         quantization_config=bnb_config,
-        torch_dtype=torch.bfloat16
+        torch_dtype=torch.bfloat16,
+        use_auth_token=os.getenv("HF_ACCESS_TOKEN")
     )
 
     model = prepare_model_for_kbit_training(model)
@@ -118,110 +102,27 @@ def get_model(model_args: ModelArgs, train_args: TrainArgs, checkpoint_dir: str)
 
 
 def prepare_llama2(model: LlamaForCausalLM, tokenizer: LlamaTokenizer):
-    # Issue 1: vocab_size mismatch
+    # Vocab_size mismatch
     # https://github.com/huggingface/transformers/issues/24899
 
-    # Issue 2: incorrect pad_token
-    # For the tokenizer, the special tokens (bos, eos, unk, pad) are set to be (<s>, </s>, <unk>, <unk>).
-    # tokenizer.decode([32000]) returns <pad>
+    assert tokenizer.vocab_size == model.vocab_size
+    assert tokenizer.get_added_vocab() == {"<pad>": 32000}
+
     tokenizer.add_special_tokens(dict(pad_token="<pad>"))
 
-    return tokenizer
+    # Update model's embeddings data to include pad_token
+    model.resize_token_embeddings(len(tokenizer))
 
+    input_embeddings_data = model.get_input_embeddings().weight.data
+    output_embeddings_data = model.get_output_embeddings().weight.data
 
-@dataclass
-class DataCollatorForCausalLM():
-    tokenizer: transformers.PreTrainedTokenizer
-    source_max_len: int
-    target_max_len: int
+    input_embeddings_avg = input_embeddings_data[:-1].mean(dim=0, keepdim=True)
+    output_embeddings_avg = output_embeddings_data[:-1].mean(dim=0, keepdim=True)
 
-    def __call__(self, instances: Sequence[dict]) -> Dict[str, torch.Tensor]:
-        sources = [f"{self.tokenizer.bos_token}{example['input']}" for example in instances]
-        targets = [f"{example['output']}{self.tokenizer.eos_token}" for example in instances]
-        
-        tokenized_sources = self.tokenizer(
-            sources,
-            max_length=self.source_max_len,
-            truncation=True,
-            add_special_tokens=False,
-        )
-        tokenized_targets = self.tokenizer(
-            targets,
-            max_length=self.target_max_len,
-            truncation=True,
-            add_special_tokens=False,
-        )
-        
-        input_ids, labels = [], []
-        for tokenized_source, tokenized_target in zip(
-            tokenized_sources["input_ids"],
-            tokenized_targets["input_ids"]
-        ):
-            input_ids.append(torch.tensor(tokenized_source + tokenized_target))
-            labels.append(
-                torch.tensor([IGNORE_INDEX for _ in range(len(tokenized_source))] + copy.deepcopy(tokenized_target))
-            ) # mask out source tokens
+    input_embeddings_data[-1:] = input_embeddings_avg
+    output_embeddings_data[-1:] = output_embeddings_avg
 
-        input_ids = pad_sequence(input_ids, batch_first=True, padding_value=self.tokenizer.pad_token_id)
-        labels = pad_sequence(labels, batch_first=True, padding_value=IGNORE_INDEX)
-        
-        data_dict = dict(
-            input_ids=input_ids,
-            attention_mask= input_ids.ne(self.tokenizer.pad_token_id),
-            labels=labels
-        )
-
-        return data_dict
-
-
-def get_data_module(data_args: DataArgs, train_args: TrainArgs, tokenizer: transformers.PreTrainedTokenizer):
-    dataset = load_dataset(data_args.dataset)
-
-    # Format dataset to have only "input" and "output" columns
-    if data_args.dataset_format == "alpaca":
-        dataset = dataset.map(
-            lambda example: {"input": ALPACA_PROMPT.format(**example)}, 
-            remove_columns=["instruction"]
-        )
-    elif data_args.dataset_format == "self-instruct":
-        dataset = dataset.rename_columns({"prompt": "input", "completion": "output"})
-    else:
-        raise ValueError(f"Invalid dataset_format argument {data_args.dataset_format}. ")
-
-    def _get_example_length(example):
-        return dict(length=len(example["input"]) + len(example["output"]))
-    
-    if train_args.do_eval:
-        if "eval" in dataset:
-            eval_dataset = dataset["eval"]
-        else:
-            dataset = dataset["train"].train_test_split(
-                test_size=data_args.eval_dataset_size, shuffle=True
-            )
-            eval_dataset = dataset["test"]
-        if train_args.group_by_length:
-            eval_dataset = eval_dataset.map(_get_example_length)
-    else:
-        eval_dataset = None
-    
-    if train_args.do_train:
-        train_dataset = dataset["train"]
-        if train_args.group_by_length:
-            train_dataset = train_dataset.map(_get_example_length)
-    else:
-        train_dataset = None
-
-    data_collator = DataCollatorForCausalLM(
-        tokenizer=tokenizer,
-        source_max_len=data_args.source_max_len,
-        target_max_len=data_args.target_max_len,
-    )
-
-    return dict(
-        train_dataset=train_dataset,
-        eval_dataset=eval_dataset,
-        data_collator=data_collator
-    )
+    assert len(tokenizer) == model.vocab_size
 
 
 class SavePeftModelCallback(transformers.TrainerCallback):
@@ -253,7 +154,7 @@ class SavePeftModelCallback(transformers.TrainerCallback):
 
 def train():
     hfparser = transformers.HfArgumentParser((ModelArgs, DataArgs, TrainArgs))
-    model_args, data_args, train_args, gen_args = hfparser.parse_args_into_dataclasses()
+    model_args, data_args, train_args = hfparser.parse_args_into_dataclasses()
     
     checkpoint_dir = get_last_checkpoint(train_args.output_dir)
 
@@ -262,7 +163,7 @@ def train():
         model_args.base_model,
         padding_side="right",
         use_fast=False,
-        use_auth_token=True
+        use_auth_token=os.getenv("HF_ACCESS_TOKEN")
     )
     prepare_llama2(model, tokenizer)
 

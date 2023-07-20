@@ -1,0 +1,7 @@
+Below is a natural language question posed to The World Avatar's question answering system. Convert the question into a SPARQL query that can be made to The World Avatar's knowledge graphs.
+
+
+### Question:
+{question}
+
+### SPARQL query:
