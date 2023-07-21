@@ -5,6 +5,15 @@ import transformers
 @dataclass
 class ModelArgs:
     base_model: str
+    # quantization hyperparams
+    bits: int = field(
+        default=8,
+        metadata={"help": "How many bits to use."}
+    )
+    # lora hyperparams
+    lora_r: int = field(default=8)
+    lora_alpha: float = field(default=32)
+    lora_dropout: float = field(default=0.05)
 
 
 @dataclass
@@ -24,13 +33,4 @@ class DataArgs:
 
 @dataclass
 class TrainArgs(transformers.Seq2SeqTrainingArguments):
-    batch_size: int = field(default=128)
-    # quantization hyperparams
-    bits: int = field(
-        default=8,
-        metadata={"help": "How many bits to use."}
-    )
-    # lora hyperparams
-    lora_r: int = field(default=8)
-    lora_alpha: float = field(default=32)
-    lora_dropout: float = field(default=0.05)
+    pass
