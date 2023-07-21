@@ -1,0 +1,23 @@
+python finetune.py \
+    --base_model meta-llama/Llama-2-7b-hf \
+    --train_data_path ./data/train_20230721.json \
+    --eval_data_path ./data/eval_20230721.json \
+    --prompt_template marie_no_context \
+    --output_dir /rds/user/nmdt2/hpc-work/outputs/llama-2-7b \
+    --do_train \
+    --do_eval \
+    --source_max_len 512 \
+    --target_max_len 512 \
+    --per_device_train_batch_size 4 \
+    --per_device_eval_batch_size 4 \
+    --gradient_accumulation_steps 4 \
+    --evaluation_strategy steps \
+    --eval_steps 10 \
+    --num_train_epochs 3 \
+    --optim paged_adamw_32bit \
+    --learning_rate 0.0002 \
+    --logging_steps 1 \
+    --bits 4 \
+    --lora_r 16 \
+    --lora_alpha 16 \
+    --lora_dropout 0.05

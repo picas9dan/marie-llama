@@ -1,0 +1,342 @@
+[
+    {
+        "question": "Outline a collection of molecules displaying a MolecularWeight below 101 and higher than 458.",
+        "query": "?IUPACNameValue ?MolecularWeightValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasMolecularWeight ?MolecularWeightIRI .\n    ?MolecularWeightIRI os:value ?MolecularWeightValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?MolecularWeightValue < 101 && ?MolecularWeightValue > 458)\n}"
+    },
+    {
+        "question": "Enumerate the compounds demonstrating AtomChiralCount surpassing 477",
+        "query": "?IUPACNameValue ?AtomChiralCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasAtomChiralCount ?AtomChiralCountIRI .\n    ?AtomChiralCountIRI os:value ?AtomChiralCountValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?AtomChiralCountValue > 477)\n}"
+    },
+    {
+        "question": "Specify the substances exhibiting CollisionCrossSection values surpassing 185",
+        "query": "?IUPACNameValue ?CollisionCrossSectionValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasCollisionCrossSection ?CollisionCrossSectionIRI .\n    ?CollisionCrossSectionIRI os:value ?CollisionCrossSectionValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?CollisionCrossSectionValue > 185)\n}"
+    },
+    {
+        "question": "List the species possessing a RotatableBondCount value greater than 289.",
+        "query": "?IUPACNameValue ?RotatableBondCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasRotatableBondCount ?RotatableBondCountIRI .\n    ?RotatableBondCountIRI os:value ?RotatableBondCountValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?RotatableBondCountValue > 289)\n}"
+    },
+    {
+        "question": "Share a compilation of substances with IsoelectricPoint levels exceeding 392",
+        "query": "?IUPACNameValue ?IsoelectricPointValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasIsoelectricPoint ?IsoelectricPointIRI .\n    ?IsoelectricPointIRI os:value ?IsoelectricPointValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?IsoelectricPointValue > 392)\n}"
+    },
+    {
+        "question": "Do you know the HeavyAtomCount of 3-acetoxy-4-(trimethylammonio)butanoate?",
+        "query": "?HeavyAtomCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"3-acetoxy-4-(trimethylammonio)butanoate\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasHeavyAtomCount ?HeavyAtomCountIRI .\n    ?HeavyAtomCountIRI os:value ?HeavyAtomCountValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "I'm curious about the BondChiralCount of C1=CC=C(C=C1)C(=O)NCC(=O)O. Can you provide that information?",
+        "query": "?BondChiralCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"C1=CC=C(C=C1)C(=O)NCC(=O)O\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasBondChiralCount ?BondChiralCountIRI .\n    ?BondChiralCountIRI os:value ?BondChiralCountValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "Do you happen to know the CanonicalizedCompound of N-[5-[[4-[5-[acetyl(hydroxy)amino]pentylamino]-1,4-dioxobutyl]-hydroxyamino]pentyl]-N'-(5-aminopentyl)-N'-hydroxybutanediamide?",
+        "query": "?CanonicalizedCompoundValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"N-[5-[[4-[5-[acetyl(hydroxy)amino]pentylamino]-1,4-dioxobutyl]-hydroxyamino]pentyl]-N'-(5-aminopentyl)-N'-hydroxybutanediamide\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasCanonicalizedCompound ?CanonicalizedCompoundIRI .\n    ?CanonicalizedCompoundIRI os:value ?CanonicalizedCompoundValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "List various compounds characterized by a CollisionCrossSection below 334 and above 734.",
+        "query": "?IUPACNameValue ?CollisionCrossSectionValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasCollisionCrossSection ?CollisionCrossSectionIRI .\n    ?CollisionCrossSectionIRI os:value ?CollisionCrossSectionValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n\tOPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?CollisionCrossSectionValue < 334 && ?CollisionCrossSectionValue > 734)\n}"
+    },
+    {
+        "question": "Provide a catalog of compounds exhibiting AtomChiralDefCount exceeding 143.",
+        "query": "?IUPACNameValue ?AtomChiralDefCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasAtomChiralDefCount ?AtomChiralDefCountIRI .\n    ?AtomChiralDefCountIRI os:value ?AtomChiralDefCountValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?AtomChiralDefCountValue > 143)\n}"
+    },
+    {
+        "question": "Enlist species with MonoIsotopicWeight falling within the range of less than 486",
+        "query": "?IUPACNameValue ?MonoIsotopicWeightValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasMonoIsotopicWeight ?MonoIsotopicWeightIRI .\n    ?MonoIsotopicWeightIRI os:value ?MonoIsotopicWeightValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?MonoIsotopicWeightValue < 486)\n}"
+    },
+    {
+        "question": "Specify the substances that exhibit HeavyAtomCount values surpassing 184.",
+        "query": "?IUPACNameValue ?HeavyAtomCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasHeavyAtomCount ?HeavyAtomCountIRI .\n    ?HeavyAtomCountIRI os:value ?HeavyAtomCountValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?HeavyAtomCountValue > 184)\n}"
+    },
+    {
+        "question": "Enumerate the molecules in which the HydrogenBondAcceptorCount surpasses 157.",
+        "query": "?IUPACNameValue ?HydrogenBondAcceptorCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasHydrogenBondAcceptorCount ?HydrogenBondAcceptorCountIRI .\n    ?HydrogenBondAcceptorCountIRI os:value ?HydrogenBondAcceptorCountValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?HydrogenBondAcceptorCountValue > 157)\n}"
+    },
+    {
+        "question": "List the molecular entities that have SubStructureKeysFingerprint greater than 399.",
+        "query": "?IUPACNameValue ?SubStructureKeysFingerprintValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasSubStructureKeysFingerprint ?SubStructureKeysFingerprintIRI .\n    ?SubStructureKeysFingerprintIRI os:value ?SubStructureKeysFingerprintValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?SubStructureKeysFingerprintValue > 399)\n}"
+    },
+    {
+        "question": "Enumerate molecules wherein the MolecularWeight is less than 182.",
+        "query": "?IUPACNameValue ?MolecularWeightValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasMolecularWeight ?MolecularWeightIRI .\n    ?MolecularWeightIRI os:value ?MolecularWeightValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?MolecularWeightValue < 182)\n}"
+    },
+    {
+        "question": "Provide a rundown of chemical compounds exhibiting a MonoIsotopicWeight lower than 144 and higher than 385.",
+        "query": "?IUPACNameValue ?MonoIsotopicWeightValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasMonoIsotopicWeight ?MonoIsotopicWeightIRI .\n    ?MonoIsotopicWeightIRI os:value ?MonoIsotopicWeightValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?MonoIsotopicWeightValue < 144 && ?MonoIsotopicWeightValue > 385)\n}"
+    },
+    {
+        "question": "What can you tell me about the CompoundComplexity of 2,3-dihydroxy-3-methylpentanoic acid?",
+        "query": "?CompoundComplexityValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"2,3-dihydroxy-3-methylpentanoic acid\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasCompoundComplexity ?CompoundComplexityIRI .\n    ?CompoundComplexityIRI os:value ?CompoundComplexityValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "What is the CompoundComplexity for C5H8O4?",
+        "query": "?CompoundComplexityValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"C5H8O4\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasCompoundComplexity ?CompoundComplexityIRI .\n    ?CompoundComplexityIRI os:value ?CompoundComplexityValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "Offer a compilation of species with AutoignitionTemperature that falls under 162.",
+        "query": "?IUPACNameValue ?AutoignitionTemperatureValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasAutoignitionTemperature ?AutoignitionTemperatureIRI .\n    ?AutoignitionTemperatureIRI os:value ?AutoignitionTemperatureValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?AutoignitionTemperatureValue < 162)\n}"
+    },
+    {
+        "question": "What is the exact BondChiralDefCount of 2-methyl-3-oxidanylidene-propanoic acid?",
+        "query": "?BondChiralDefCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"2-methyl-3-oxidanylidene-propanoic acid\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasBondChiralDefCount ?BondChiralDefCountIRI .\n    ?BondChiralDefCountIRI os:value ?BondChiralDefCountValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "Can you provide the AtomChiralCount of [5-(4-amino-2-oxopyrimidin-1-yl)-3,4-dihydroxyoxolan-2-yl]methyl phosphono hydrogen phosphate? ",
+        "query": "?AtomChiralCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"[5-(4-amino-2-oxopyrimidin-1-yl)-3,4-dihydroxyoxolan-2-yl]methyl phosphono hydrogen phosphate\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasAtomChiralCount ?AtomChiralCountIRI .\n    ?AtomChiralCountIRI os:value ?AtomChiralCountValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "Outline the molecules that demonstrate HydrogenBondDonorCount values higher than 200.",
+        "query": "?IUPACNameValue ?HydrogenBondDonorCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasHydrogenBondDonorCount ?HydrogenBondDonorCountIRI .\n    ?HydrogenBondDonorCountIRI os:value ?HydrogenBondDonorCountValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?HydrogenBondDonorCountValue > 200)\n}"
+    },
+    {
+        "question": "Provide a roster of species in which IonizationPotential is higher than 141.",
+        "query": "?IUPACNameValue ?IonizationPotentialValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasIonizationPotential ?IonizationPotentialIRI .\n    ?IonizationPotentialIRI os:value ?IonizationPotentialValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?IonizationPotentialValue > 141)\n}"
+    },
+    {
+        "question": "Tabulate molecules with TautomerCount below the designated 406.",
+        "query": "?IUPACNameValue ?TautomerCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasTautomerCount ?TautomerCountIRI .\n    ?TautomerCountIRI os:value ?TautomerCountValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?TautomerCountValue < 406)\n}"
+    },
+    {
+        "question": "Provide a catalog of compounds exhibiting SubStructureKeysFingerprint below 236.",
+        "query": "?IUPACNameValue ?SubStructureKeysFingerprintValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasSubStructureKeysFingerprint ?SubStructureKeysFingerprintIRI .\n    ?SubStructureKeysFingerprintIRI os:value ?SubStructureKeysFingerprintValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?SubStructureKeysFingerprintValue < 236)\n}"
+    },
+    {
+        "question": "Identify species with a Charge that is lower than 402.",
+        "query": "?IUPACNameValue ?ChargeValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasCharge ?ChargeIRI .\n    ?ChargeIRI os:value ?ChargeValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?ChargeValue < 402)\n}"
+    },
+    {
+        "question": "I'd like to learn more about the BoilingPoint of 3-hydroxy-1,2-dimethyl-4-pyridinone. Can you help?",
+        "query": "?BoilingPointValue ?UnitValue ?ReferenceStateValue ?ReferenceStateUnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"3-hydroxy-1,2-dimethyl-4-pyridinone\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasBoilingPoint ?BoilingPointIRI .\n    ?BoilingPointIRI os:value ?BoilingPointValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n}"
+    },
+    {
+        "question": "Compile a roster of molecular species with a IonizationPotential value that falls below 289 and exceeds 528.",
+        "query": "?IUPACNameValue ?IonizationPotentialValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasIonizationPotential ?IonizationPotentialIRI .\n    ?IonizationPotentialIRI os:value ?IonizationPotentialValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n\tOPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?IonizationPotentialValue < 289 && ?IonizationPotentialValue > 528)\n}"
+    },
+    {
+        "question": "Outline a collection of compounds demonstrating Caco2Permeability below 42.",
+        "query": "?IUPACNameValue ?Caco2PermeabilityValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasCaco2Permeability ?Caco2PermeabilityIRI .\n    ?Caco2PermeabilityIRI os:value ?Caco2PermeabilityValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?Caco2PermeabilityValue < 42)\n}"
+    },
+    {
+        "question": "Detail a register of substances displaying a AtomChiralDefCount lower than 282.",
+        "query": "?IUPACNameValue ?AtomChiralDefCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasAtomChiralDefCount ?AtomChiralDefCountIRI .\n    ?AtomChiralDefCountIRI os:value ?AtomChiralDefCountValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?AtomChiralDefCountValue < 282)\n}"
+    },
+    {
+        "question": "Catalogue compounds where the HydrogenBondDonorCount is lower than 88.",
+        "query": "?IUPACNameValue ?HydrogenBondDonorCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasHydrogenBondDonorCount ?HydrogenBondDonorCountIRI .\n    ?HydrogenBondDonorCountIRI os:value ?HydrogenBondDonorCountValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?HydrogenBondDonorCountValue < 88)\n}"
+    },
+    {
+        "question": "Share a compilation of substances with BondChiralDefCount levels above 350",
+        "query": "?IUPACNameValue ?BondChiralDefCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasBondChiralDefCount ?BondChiralDefCountIRI .\n    ?BondChiralDefCountIRI os:value ?BondChiralDefCountValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?BondChiralDefCountValue > 350)\n}"
+    },
+    {
+        "question": "Could you tell me the IonizationPotential of CCN1C(=O)C=CC1=O?",
+        "query": "?IonizationPotentialValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"CCN1C(=O)C=CC1=O\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasIonizationPotential ?IonizationPotentialIRI .\n    ?IonizationPotentialIRI os:value ?IonizationPotentialValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "Can you share the StandardEnthalpyOfFormation of CC(C(=O)O)O with me?",
+        "query": "?StandardEnthalpyOfFormationValue ?UnitValue ?ReferenceStateValue ?ReferenceStateUnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"CC(C(=O)O)O\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasStandardEnthalpyOfFormation ?StandardEnthalpyOfFormationIRI .\n    ?StandardEnthalpyOfFormationIRI os:value ?StandardEnthalpyOfFormationValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n}"
+    },
+    {
+        "question": "List various compounds showcasing a Caco2Permeability below 224 and exceeding 496.",
+        "query": "?IUPACNameValue ?Caco2PermeabilityValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasCaco2Permeability ?Caco2PermeabilityIRI .\n    ?Caco2PermeabilityIRI os:value ?Caco2PermeabilityValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?Caco2PermeabilityValue < 224 && ?Caco2PermeabilityValue > 496)\n}"
+    },
+    {
+        "question": "Detail the compounds with CollisionCrossSection exceeding the threshold of 95.",
+        "query": "?IUPACNameValue ?CollisionCrossSectionValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasCollisionCrossSection ?CollisionCrossSectionIRI .\n    ?CollisionCrossSectionIRI os:value ?CollisionCrossSectionValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?CollisionCrossSectionValue > 95)\n}"
+    },
+    {
+        "question": "Can you let me know the VaporPressure of 5,6-dihydroxy-1-cyclohexa-1,3-dienecarboxylic acid?",
+        "query": "?VaporPressureValue ?UnitValue ?ReferenceStateValue ?ReferenceStateUnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"5,6-dihydroxy-1-cyclohexa-1,3-dienecarboxylic acid\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasVaporPressure ?VaporPressureIRI .\n    ?VaporPressureIRI os:value ?VaporPressureValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n}"
+    },
+    {
+        "question": "Provide an inventory of species showing TautomerCount below the given 437",
+        "query": "?IUPACNameValue ?TautomerCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasTautomerCount ?TautomerCountIRI .\n    ?TautomerCountIRI os:value ?TautomerCountValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?TautomerCountValue < 437)\n}"
+    },
+    {
+        "question": "Illustrate the molecular compounds that possess AtomChiralUndefCount levels higher than 101.",
+        "query": "?IUPACNameValue ?AtomChiralUndefCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasAtomChiralUndefCount ?AtomChiralUndefCountIRI .\n    ?AtomChiralUndefCountIRI os:value ?AtomChiralUndefCountValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?AtomChiralUndefCountValue > 101)\n}"
+    },
+    {
+        "question": "Provide an inventory of species showing HeavyAtomCount below the given 108",
+        "query": "?IUPACNameValue ?HeavyAtomCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasHeavyAtomCount ?HeavyAtomCountIRI .\n    ?HeavyAtomCountIRI os:value ?HeavyAtomCountValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?HeavyAtomCountValue < 108)\n}"
+    },
+    {
+        "question": "Can you share the HeavyAtomCount of C7H7NO5 with me?",
+        "query": "?HeavyAtomCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"C7H7NO5\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasHeavyAtomCount ?HeavyAtomCountIRI .\n    ?HeavyAtomCountIRI os:value ?HeavyAtomCountValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "What ExactMass does InChI=1S/C6H10O7/c7-1-2(8)3(9)4(10)5(11)6(12)13/h2-4,7-10H,1H2,(H,12,13) have?",
+        "query": "?ExactMassValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"InChI=1S/C6H10O7/c7-1-2(8)3(9)4(10)5(11)6(12)13/h2-4,7-10H,1H2,(H,12,13)\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasExactMass ?ExactMassIRI .\n    ?ExactMassIRI os:value ?ExactMassValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "Tabulate molecules exhibiting XLogP3 below the specified 438.",
+        "query": "?IUPACNameValue ?XLogP3Value ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasXLogP3 ?XLogP3IRI .\n    ?XLogP3IRI os:value ?XLogP3Value ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?XLogP3Value < 438)\n}"
+    },
+    {
+        "question": "Provide a compilation of chemical compounds exhibiting a CanonicalizedCompound that falls below 370 and surpasses 790.",
+        "query": "?IUPACNameValue ?CanonicalizedCompoundValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasCanonicalizedCompound ?CanonicalizedCompoundIRI .\n    ?CanonicalizedCompoundIRI os:value ?CanonicalizedCompoundValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n\tOPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?CanonicalizedCompoundValue < 370 && ?CanonicalizedCompoundValue > 790)\n}"
+    },
+    {
+        "question": "Do you know the OpticalRotation of C3H4N2O4?",
+        "query": "?OpticalRotationValue ?UnitValue ?ReferenceStateValue ?ReferenceStateUnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"C3H4N2O4\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasOpticalRotation ?OpticalRotationIRI .\n    ?OpticalRotationIRI os:value ?OpticalRotationValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n}"
+    },
+    {
+        "question": "Present a directory of compounds demonstrating IsotopeAtomCount beneath 144.",
+        "query": "?IUPACNameValue ?IsotopeAtomCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasIsotopeAtomCount ?IsotopeAtomCountIRI .\n    ?IsotopeAtomCountIRI os:value ?IsotopeAtomCountValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?IsotopeAtomCountValue < 144)\n}"
+    },
+    {
+        "question": "Enumerate multiple molecular species with a CanonicalizedCompound value below 339 and beyond 504.",
+        "query": "?IUPACNameValue ?CanonicalizedCompoundValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasCanonicalizedCompound ?CanonicalizedCompoundIRI .\n    ?CanonicalizedCompoundIRI os:value ?CanonicalizedCompoundValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n\tOPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?CanonicalizedCompoundValue < 339 && ?CanonicalizedCompoundValue > 504)\n}"
+    },
+    {
+        "question": "Outline a collection of compounds demonstrating ExactMass below 203.",
+        "query": "?IUPACNameValue ?ExactMassValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasExactMass ?ExactMassIRI .\n    ?ExactMassIRI os:value ?ExactMassValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?ExactMassValue < 203)\n}"
+    },
+    {
+        "question": "Detail the compounds with IsotopeAtomCount exceeding the threshold of 147.",
+        "query": "?IUPACNameValue ?IsotopeAtomCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasIsotopeAtomCount ?IsotopeAtomCountIRI .\n    ?IsotopeAtomCountIRI os:value ?IsotopeAtomCountValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?IsotopeAtomCountValue > 147)\n}"
+    },
+    {
+        "question": "What details do you have regarding the RotatableBondCount of CC(C(C)O)C(=O)SCCNC(=O)CCNC(=O)C(C(C)(C)COP(=O)(O)OP(=O)(O)OCC1C(C(C(O1)N2C=NC3=C(N=CN=C32)N)O)OP(=O)(O)O)O?",
+        "query": "?RotatableBondCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"CC(C(C)O)C(=O)SCCNC(=O)CCNC(=O)C(C(C)(C)COP(=O)(O)OP(=O)(O)OCC1C(C(C(O1)N2C=NC3=C(N=CN=C32)N)O)OP(=O)(O)O)O\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasRotatableBondCount ?RotatableBondCountIRI .\n    ?RotatableBondCountIRI os:value ?RotatableBondCountValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "Enumerate molecules wherein the BondChiralDefCount is less than 213.",
+        "query": "?IUPACNameValue ?BondChiralDefCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasBondChiralDefCount ?BondChiralDefCountIRI .\n    ?BondChiralDefCountIRI os:value ?BondChiralDefCountValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?BondChiralDefCountValue < 213)\n}"
+    },
+    {
+        "question": "Catalogue compounds where the IsoelectricPoint is lower than 264.",
+        "query": "?IUPACNameValue ?IsoelectricPointValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasIsoelectricPoint ?IsoelectricPointIRI .\n    ?IsoelectricPointIRI os:value ?IsoelectricPointValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?IsoelectricPointValue < 264)\n}"
+    },
+    {
+        "question": "What details do you have regarding the HydrogenBondDonorCount of 3,5-dihydroxy-3-methylpentanoic acid?",
+        "query": "?HydrogenBondDonorCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"3,5-dihydroxy-3-methylpentanoic acid\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasHydrogenBondDonorCount ?HydrogenBondDonorCountIRI .\n    ?HydrogenBondDonorCountIRI os:value ?HydrogenBondDonorCountValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "Compile a record of molecular species with a MolecularWeight value that falls below 275 and surpasses 484.",
+        "query": "?IUPACNameValue ?MolecularWeightValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasMolecularWeight ?MolecularWeightIRI .\n    ?MolecularWeightIRI os:value ?MolecularWeightValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n\tOPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?MolecularWeightValue < 275 && ?MolecularWeightValue > 484)\n}"
+    },
+    {
+        "question": "What is the C40H46N4O17 VaporDensity?",
+        "query": "?VaporDensityValue ?UnitValue ?ReferenceStateValue ?ReferenceStateUnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"C40H46N4O17\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasVaporDensity ?VaporDensityIRI .\n    ?VaporDensityIRI os:value ?VaporDensityValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n}"
+    },
+    {
+        "question": "What is the VaporDensity for C26H28N2O8?",
+        "query": "?VaporDensityValue ?UnitValue ?ReferenceStateValue ?ReferenceStateUnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"C26H28N2O8\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasVaporDensity ?VaporDensityIRI .\n    ?VaporDensityIRI os:value ?VaporDensityValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n}"
+    },
+    {
+        "question": "What can you tell me about the EnthalpyOfSublimation of InChI=1S/C11H15N5O3S/c1-20-2-5-7(17)8(18)11(19-5)16-4-15-6-9(12)13-3-14-10(6)16/h3-5,7-8,11,17-18H,2H2,1H3,(H2,12,13,14)?",
+        "query": "?EnthalpyOfSublimationValue ?UnitValue ?ReferenceStateValue ?ReferenceStateUnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"InChI=1S/C11H15N5O3S/c1-20-2-5-7(17)8(18)11(19-5)16-4-15-6-9(12)13-3-14-10(6)16/h3-5,7-8,11,17-18H,2H2,1H3,(H2,12,13,14)\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasEnthalpyOfSublimation ?EnthalpyOfSublimationIRI .\n    ?EnthalpyOfSublimationIRI os:value ?EnthalpyOfSublimationValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n}"
+    },
+    {
+        "question": "I'd like to learn more about the HeatOfCombustion of [2-aminoethoxy(hydroxy)phosphoryl] [5-(4-amino-2-keto-pyrimidin-1-yl)-3,4-dihydroxy-tetrahydrofuran-2-yl]methyl hydrogen phosphate. Can you help?",
+        "query": "?HeatOfCombustionValue ?UnitValue ?ReferenceStateValue ?ReferenceStateUnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"[2-aminoethoxy(hydroxy)phosphoryl] [5-(4-amino-2-keto-pyrimidin-1-yl)-3,4-dihydroxy-tetrahydrofuran-2-yl]methyl hydrogen phosphate\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasHeatOfCombustion ?HeatOfCombustionIRI .\n    ?HeatOfCombustionIRI os:value ?HeatOfCombustionValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n}"
+    },
+    {
+        "question": "Outline a collection of compounds demonstrating CollisionCrossSection below 94.",
+        "query": "?IUPACNameValue ?CollisionCrossSectionValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasCollisionCrossSection ?CollisionCrossSectionIRI .\n    ?CollisionCrossSectionIRI os:value ?CollisionCrossSectionValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?CollisionCrossSectionValue < 94)\n}"
+    },
+    {
+        "question": "Outline the molecules that demonstrate BondChiralUndefCount values higher than 443.",
+        "query": "?IUPACNameValue ?BondChiralUndefCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasBondChiralUndefCount ?BondChiralUndefCountIRI .\n    ?BondChiralUndefCountIRI os:value ?BondChiralUndefCountValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?BondChiralUndefCountValue > 443)\n}"
+    },
+    {
+        "question": "What is the CanonicalizedCompound for 6,6,9-trimethyl-3-pentyl-6a,7,8,10a-tetrahydrobenzo[c][1]benzopyran-1-ol?",
+        "query": "?CanonicalizedCompoundValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"6,6,9-trimethyl-3-pentyl-6a,7,8,10a-tetrahydrobenzo[c][1]benzopyran-1-ol\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasCanonicalizedCompound ?CanonicalizedCompoundIRI .\n    ?CanonicalizedCompoundIRI os:value ?CanonicalizedCompoundValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "Could you inform me of the IsoelectricPoint of N'-(5-azanylpentyl)-N-[5-[[4-[5-[ethanoyl(oxidanyl)amino]pentylamino]-4-oxidanylidene-butanoyl]-oxidanyl-amino]pentyl]-N'-oxidanyl-butanediamide?",
+        "query": "?IsoelectricPointValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"N'-(5-azanylpentyl)-N-[5-[[4-[5-[ethanoyl(oxidanyl)amino]pentylamino]-4-oxidanylidene-butanoyl]-oxidanyl-amino]pentyl]-N'-oxidanyl-butanediamide\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasIsoelectricPoint ?IsoelectricPointIRI .\n    ?IsoelectricPointIRI os:value ?IsoelectricPointValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "Present a roster of chemical substances showcasing a HydrogenBondDonorCount that is lower than 211 and higher than 318.",
+        "query": "?IUPACNameValue ?HydrogenBondDonorCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasHydrogenBondDonorCount ?HydrogenBondDonorCountIRI .\n    ?HydrogenBondDonorCountIRI os:value ?HydrogenBondDonorCountValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n\tOPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?HydrogenBondDonorCountValue < 211 && ?HydrogenBondDonorCountValue > 318)\n}"
+    },
+    {
+        "question": "Outline a variety of molecules displaying a Hydrophobicity below 91 and surpassing 190.",
+        "query": "?IUPACNameValue ?HydrophobicityValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasHydrophobicity ?HydrophobicityIRI .\n    ?HydrophobicityIRI os:value ?HydrophobicityValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?HydrophobicityValue < 91 && ?HydrophobicityValue > 190)\n}"
+    },
+    {
+        "question": "Can you provide the MonoIsotopicWeight of C1=CC(=C(C=C1[N+](=O)[O-])[N+](=O)[O-])Cl?",
+        "query": "?MonoIsotopicWeightValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"C1=CC(=C(C=C1[N+](=O)[O-])[N+](=O)[O-])Cl\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasMonoIsotopicWeight ?MonoIsotopicWeightIRI .\n    ?MonoIsotopicWeightIRI os:value ?MonoIsotopicWeightValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "Enumerate multiple molecular species with a CollisionCrossSection value below 275 and beyond 593.",
+        "query": "?IUPACNameValue ?CollisionCrossSectionValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasCollisionCrossSection ?CollisionCrossSectionIRI .\n    ?CollisionCrossSectionIRI os:value ?CollisionCrossSectionValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?CollisionCrossSectionValue < 275 && ?CollisionCrossSectionValue > 593)\n}"
+    },
+    {
+        "question": "Provide a rundown of chemical compounds exhibiting a HeavyAtomCount lower than 285 and higher than 752.",
+        "query": "?IUPACNameValue ?HeavyAtomCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasHeavyAtomCount ?HeavyAtomCountIRI .\n    ?HeavyAtomCountIRI os:value ?HeavyAtomCountValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?HeavyAtomCountValue < 285 && ?HeavyAtomCountValue > 752)\n}"
+    },
+    {
+        "question": "Offer a comprehensive list of molecules demonstrating a AutoignitionTemperature that is beneath 270 and above 753.",
+        "query": "?IUPACNameValue ?AutoignitionTemperatureValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasAutoignitionTemperature ?AutoignitionTemperatureIRI .\n    ?AutoignitionTemperatureIRI os:value ?AutoignitionTemperatureValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n\tOPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?AutoignitionTemperatureValue < 270 && ?AutoignitionTemperatureValue > 753)\n}"
+    },
+    {
+        "question": "Tabulate molecules exhibiting XLogP3 below the specified 218.",
+        "query": "?IUPACNameValue ?XLogP3Value ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasXLogP3 ?XLogP3IRI .\n    ?XLogP3IRI os:value ?XLogP3Value ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?XLogP3Value < 218)\n}"
+    },
+    {
+        "question": "Provide a rundown of chemical compounds exhibiting a SubStructureKeysFingerprint lower than 256 and higher than 444.",
+        "query": "?IUPACNameValue ?SubStructureKeysFingerprintValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasSubStructureKeysFingerprint ?SubStructureKeysFingerprintIRI .\n    ?SubStructureKeysFingerprintIRI os:value ?SubStructureKeysFingerprintValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n\tOPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?SubStructureKeysFingerprintValue < 256 && ?SubStructureKeysFingerprintValue > 444)\n}"
+    },
+    {
+        "question": "MeltingPoint of CCN(CC)CCNC(=O)C1=CC=C(C=C1)NC(=O)C",
+        "query": "?MeltingPointValue ?UnitValue ?ReferenceStateValue ?ReferenceStateUnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"CCN(CC)CCNC(=O)C1=CC=C(C=C1)NC(=O)C\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasMeltingPoint ?MeltingPointIRI .\n    ?MeltingPointIRI os:value ?MeltingPointValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n}"
+    },
+    {
+        "question": "Provide an inventory of species showing BondChiralDefCount below the given 442",
+        "query": "?IUPACNameValue ?BondChiralDefCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasBondChiralDefCount ?BondChiralDefCountIRI .\n    ?BondChiralDefCountIRI os:value ?BondChiralDefCountValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?BondChiralDefCountValue < 442)\n}"
+    },
+    {
+        "question": "Enlist species with CompoundComplexity falling within the range of less than 281",
+        "query": "?IUPACNameValue ?CompoundComplexityValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasCompoundComplexity ?CompoundComplexityIRI .\n    ?CompoundComplexityIRI os:value ?CompoundComplexityValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?CompoundComplexityValue < 281)\n}"
+    },
+    {
+        "question": "Catalog the entities with HydrogenBondDonorCount exceeding 246.",
+        "query": "?IUPACNameValue ?HydrogenBondDonorCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasHydrogenBondDonorCount ?HydrogenBondDonorCountIRI .\n    ?HydrogenBondDonorCountIRI os:value ?HydrogenBondDonorCountValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?HydrogenBondDonorCountValue > 246)\n}"
+    },
+    {
+        "question": "What BondChiralDefCount does C4H10N2O2 have?",
+        "query": "?BondChiralDefCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"C4H10N2O2\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasBondChiralDefCount ?BondChiralDefCountIRI .\n    ?BondChiralDefCountIRI os:value ?BondChiralDefCountValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "Offer an inventory of molecules demonstrating a SubStructureKeysFingerprint that is beneath 111 and above 158.",
+        "query": "?IUPACNameValue ?SubStructureKeysFingerprintValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasSubStructureKeysFingerprint ?SubStructureKeysFingerprintIRI .\n    ?SubStructureKeysFingerprintIRI os:value ?SubStructureKeysFingerprintValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n\tOPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?SubStructureKeysFingerprintValue < 111 && ?SubStructureKeysFingerprintValue > 158)\n}"
+    },
+    {
+        "question": "Enlist species displaying AutoignitionTemperature falling under the stipulated 129.",
+        "query": "?IUPACNameValue ?AutoignitionTemperatureValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasAutoignitionTemperature ?AutoignitionTemperatureIRI .\n    ?AutoignitionTemperatureIRI os:value ?AutoignitionTemperatureValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?AutoignitionTemperatureValue < 129)\n}"
+    },
+    {
+        "question": "Offer a summary of substances with BondChiralUndefCount lesser than 184.",
+        "query": "?IUPACNameValue ?BondChiralUndefCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasBondChiralUndefCount ?BondChiralUndefCountIRI .\n    ?BondChiralUndefCountIRI os:value ?BondChiralUndefCountValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?BondChiralUndefCountValue < 184)\n}"
+    },
+    {
+        "question": "Enumerate multiple molecular species with a XLogP3 value below 80 and beyond 358.",
+        "query": "?IUPACNameValue ?XLogP3Value ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasXLogP3 ?XLogP3IRI .\n    ?XLogP3IRI os:value ?XLogP3Value ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?XLogP3Value < 80 && ?XLogP3Value > 358)\n}"
+    },
+    {
+        "question": "Could you tell me the Hydrophobicity of InChI=1S/C3H6O3/c1-2(4)3(5)6/h2,4H,1H3,(H,5,6)?",
+        "query": "?HydrophobicityValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"InChI=1S/C3H6O3/c1-2(4)3(5)6/h2,4H,1H3,(H,5,6)\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasHydrophobicity ?HydrophobicityIRI .\n    ?HydrophobicityIRI os:value ?HydrophobicityValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "Enumerate the molecules in which the IsotopeAtomCount surpasses 374.",
+        "query": "?IUPACNameValue ?IsotopeAtomCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasIsotopeAtomCount ?IsotopeAtomCountIRI .\n    ?IsotopeAtomCountIRI os:value ?IsotopeAtomCountValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?IsotopeAtomCountValue > 374)\n}"
+    },
+    {
+        "question": "Compile a record of molecular species with a Charge value that falls below 348 and surpasses 640.",
+        "query": "?IUPACNameValue ?ChargeValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasCharge ?ChargeIRI .\n    ?ChargeIRI os:value ?ChargeValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?ChargeValue < 348 && ?ChargeValue > 640)\n}"
+    },
+    {
+        "question": "Give me a list of molecules with RotatableBondCount lower than 477",
+        "query": "?IUPACNameValue ?RotatableBondCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasRotatableBondCount ?RotatableBondCountIRI .\n    ?RotatableBondCountIRI os:value ?RotatableBondCountValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?RotatableBondCountValue < 477)\n}"
+    },
+    {
+        "question": "List the species possessing a BondChiralUndefCount value greater than 413.",
+        "query": "?IUPACNameValue ?BondChiralUndefCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasBondChiralUndefCount ?BondChiralUndefCountIRI .\n    ?BondChiralUndefCountIRI os:value ?BondChiralUndefCountValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?BondChiralUndefCountValue > 413)\n}"
+    },
+    {
+        "question": "List the molecular entities that have HydrogenBondDonorCount greater than 107.",
+        "query": "?IUPACNameValue ?HydrogenBondDonorCountValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasHydrogenBondDonorCount ?HydrogenBondDonorCountIRI .\n    ?HydrogenBondDonorCountIRI os:value ?HydrogenBondDonorCountValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?HydrogenBondDonorCountValue > 107)\n}"
+    }
+]
