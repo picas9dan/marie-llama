@@ -18,7 +18,7 @@ from arguments_schema import ModelArgs
 logger = logging.getLogger('root')
 
 
-def get_model(model_args: ModelArgs, checkpoint_dir: str):
+def get_model(model_args: ModelArgs, lora_adapter_dir: Optional[str] = None, is_train: bool = False):
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=model_args.bits == 4,
         load_in_8bit=model_args.bits == 8,
@@ -37,12 +37,13 @@ def get_model(model_args: ModelArgs, checkpoint_dir: str):
         use_auth_token=os.getenv("HF_ACCESS_TOKEN")
     )
 
-    model = prepare_model_for_kbit_training(model)
-    model.gradient_checkpointing_enable()
+    if is_train:
+        model = prepare_model_for_kbit_training(model)
+        model.gradient_checkpointing_enable()
 
-    if checkpoint_dir is not None:
-        logger.info("Loading adapters from checkpoint.")
-        model = PeftModel.from_pretrained(model, os.path.join(checkpoint_dir, "adapter_model"), is_trainable=True)
+    if lora_adapter_dir is not None:
+        logger.info("Loading adapters from disk.")
+        model = PeftModel.from_pretrained(model, lora_adapter_dir, is_trainable=True)
     else:
         logger.info("Adding LoRA modules.")
         config = LoraConfig(
@@ -55,8 +56,10 @@ def get_model(model_args: ModelArgs, checkpoint_dir: str):
         )
         model = get_peft_model(model, config)
 
-    model.config.use_cache = False
-    model.print_trainable_parameters()
+    if is_train:
+        model.config.use_cache = False
+        model.print_trainable_parameters()
+        
     logger.info("Loaded model.")
 
     return model
@@ -81,8 +84,8 @@ def add_pad_token(model: LlamaForCausalLM, tokenizer: LlamaTokenizer):
     assert len(tokenizer) == model.vocab_size
 
 
-def get_model_and_tokenizer(model_args: ModelArgs, checkpoint_dir: Optional[str] = None):
-    model = get_model(model_args, checkpoint_dir)
+def get_model_and_tokenizer(model_args: ModelArgs, lora_adapter_dir: Optional[str] = None, is_train: bool = False):
+    model = get_model(model_args, lora_adapter_dir, is_train)
     tokenizer = LlamaTokenizer.from_pretrained(
         model_args.base_model,
         padding_side="right",
