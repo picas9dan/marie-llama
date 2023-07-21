@@ -56,8 +56,8 @@ class SupervisedDataset(Dataset):
         input_ids = []
         labels = []
         for source_input_ids, target_input_ids in zip(tokenized_sources["input_ids"], tokenized_targets["input_ids"]):
-            input_ids.append(torch.Tensor(source_input_ids + target_input_ids))
-            labels.append(torch.Tensor([IGNORE_INDEX for _ in range(len(source_input_ids))] + copy.deepcopy(target_input_ids)))
+            input_ids.append(torch.tensor(source_input_ids + target_input_ids))
+            labels.append(torch.tensor([IGNORE_INDEX for _ in range(len(source_input_ids))] + copy.deepcopy(target_input_ids)))
 
         self.input_ids = input_ids
         self.labels = labels
