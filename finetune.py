@@ -162,7 +162,7 @@ def train():
     )
     add_pad_token(model, tokenizer)
 
-    data_module = get_data_module(data_args, train_args, tokenizer)
+    data_module = get_data_module(data_args, tokenizer)
 
     trainer = Seq2SeqTrainer(
         model=model,
@@ -200,3 +200,4 @@ if __name__ == "__main__":
         train()
     except Exception as e:
         logger.error(e)
+        raise e
