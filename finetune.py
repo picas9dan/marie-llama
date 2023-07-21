@@ -64,7 +64,7 @@ class SavePeftModelCallback(transformers.TrainerCallback):
         self.save_model(args, state, kwargs)
         return control
 
-    def on_train_end(self, args, state, **kwargs):
+    def on_train_end(self, args, state, control, **kwargs):
         fname = os.path.join(args.output_dir, "completed")
         with open(fname, "a"):
             os.utime(fname)
