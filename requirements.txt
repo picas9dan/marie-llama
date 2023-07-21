@@ -3,6 +3,5 @@ bitsandbytes
 transformers
 peft
 accelerate
-datasets
 scipy
 sentencepiece

@@ -4,6 +4,7 @@
 - Linux OS (recommended) . It is not advisable to run this project on Windows as [`bitsandbytes` is not supported on Windows]((https://github.com/TimDettmers/bitsandbytes/issues/30)).
 - [conda](https://conda.io/projects/conda/en/latest/index.html) (recommended).
 - `python==3.10`.
+- CUDA
 
 ### Steps
 1. Create a conda environment and activate it.
@@ -22,7 +23,7 @@
    ````
 1. For access to any private models or datasets on Hugging Face, ensure that you have the necessary read privileges. Generate an [access token](https://huggingface.co/docs/hub/security-tokens) and make this an environment variable.
    ```
-   export HF_ACCESS_TOKEN="<huggingface-access-token>"
+   export HF_ACCESS_TOKEN=<huggingface-access-token>
    ```
 
 ## Data Generation/Preparation
@@ -52,5 +53,5 @@ python finetune.py
 ## Running jobs on CSD3
 Per [recommendation by CSD3](https://docs.hpc.cam.ac.uk/hpc/user-guide/io_management.html), I/O data should be placed under `/rds`. Cache for models and datasets should thus be placed here. Concretely, the Hugging Face cache directory should be set as follows.
 ```
-export HF_HOME="/rds/user/nmdt2/hpc-work/.cache/huggingface"
+export HF_HOME=/rds/user/nmdt2/hpc-work/.cache/huggingface
 ``` 

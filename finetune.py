@@ -1,4 +1,4 @@
-# Adapted from https://github.com/artidoro/qlora/blob/main/qlora.py
+# Adapted from https://github.com/artidoro/qlora/blob/main/qlora.py and https://github.com/tatsu-lab/stanford_alpaca/blob/main/train.py
 
 from datetime import datetime
 import json
@@ -101,14 +101,9 @@ def get_model(model_args: ModelArgs, train_args: TrainArgs, checkpoint_dir: str)
     return model
 
 
-def prepare_llama2(model: LlamaForCausalLM, tokenizer: LlamaTokenizer):
-    # Vocab_size mismatch
-    # https://github.com/huggingface/transformers/issues/24899
-
-    assert tokenizer.vocab_size == model.vocab_size
-    assert tokenizer.get_added_vocab() == {"<pad>": 32000}
-
-    tokenizer.add_special_tokens(dict(pad_token="<pad>"))
+def add_pad_token(model: LlamaForCausalLM, tokenizer: LlamaTokenizer):
+    assert len(tokenizer) == model.vocab_size
+    assert tokenizer.add_special_tokens(dict(pad_token="<pad>")) == 1
 
     # Update model's embeddings data to include pad_token
     model.resize_token_embeddings(len(tokenizer))
@@ -165,9 +160,9 @@ def train():
         use_fast=False,
         use_auth_token=os.getenv("HF_ACCESS_TOKEN")
     )
-    prepare_llama2(model, tokenizer)
+    add_pad_token(model, tokenizer)
 
-    data_module = get_data_module(data_args, train_args)
+    data_module = get_data_module(data_args, train_args, tokenizer)
 
     trainer = Seq2SeqTrainer(
         model=model,
@@ -201,4 +196,7 @@ def train():
 
 
 if __name__ == "__main__":
-    train()
+    try:
+        train()
+    except Exception as e:
+        logger.error(e)
