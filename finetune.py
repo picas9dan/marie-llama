@@ -110,6 +110,9 @@ def train():
         with open(os.path.join(train_args.output_dir, "metrics.json"), "w") as f:
             f.write(json.dumps(all_metrics))
 
+    with open(os.path.join(train_args.output_dir, "train_log.json"), "w") as f:
+        f.write(json.dumps(trainer.state.log_history)) 
+
 
 if __name__ == "__main__":
     try:
