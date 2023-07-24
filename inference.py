@@ -9,8 +9,8 @@ from torch.utils.data import DataLoader
 
 
 def infer():
-    hfparser = transformers.HfArgumentParser((ModelArgs, DataArgs, GenArgs, InferArgs))
-    model_args, data_args, gen_args, infer_args = hfparser.parse_args_into_dataclasses()
+    hfparser = transformers.HfArgumentParser((ModelArgs, DataArgs, InferArgs))
+    model_args, data_args,infer_args = hfparser.parse_args_into_dataclasses()
 
     model, tokenizer = get_model_and_tokenizer(model_args, is_train=False)
     model.eval()
@@ -23,17 +23,17 @@ def infer():
     )
     data_collator = CausalLmCollator(tokenizer=tokenizer)
     dataloader = DataLoader(dataset, batch_size=infer_args.batch_size, collate_fn=data_collator)
-    gen_config = GenerationConfig(**vars(gen_args))
 
     predictions = []
+    print("Generating predictions...")
     with torch.no_grad():
         for batch in dataloader:
             outputs = model.generate(
-                **batch,
-                generation_config=gen_config
+                **{k: v.to("cuda") for k, v in batch.items()},
+                max_new_tokens=256,
             )
             output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
-            predictions.extend([text.split("### Query:", 1)[-1] for text in output_texts])
+            predictions.extend(output_texts)
 
     with open(infer_args.output_file, "w") as f:
         f.writelines(predictions)

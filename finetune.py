@@ -70,7 +70,7 @@ def train():
         model_args.lora_adapter_dir = os.path.join(checkpoint_dir, "adapter_model")
     model, tokenizer = get_model_and_tokenizer(model_args, is_train=True)
 
-    data_module = get_data_module(data_args, tokenizer)
+    data_module = get_data_module(data_args, tokenizer, train_args.do_eval)
 
     trainer = Seq2SeqTrainer(
         model=model,
