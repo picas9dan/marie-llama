@@ -64,8 +64,8 @@ class CausalLmDataset(Dataset):
             self.input_ids = input_ids
             self.labels = labels
         else:
-            self.input_ids = torch.tensor(source_input_ids)
-            self.labels = torch.tensor([IGNORE_INDEX for _ in range(len(source_input_ids))])
+            self.input_ids = [torch.tensor(source_input_ids) for source_input_ids in tokenized_sources["input_ids"]]
+            self.labels = [torch.tensor([IGNORE_INDEX for _ in range(len(source_input_ids))]) for source_input_ids in tokenized_sources["input_ids"]]
 
     def __len__(self):
         return len(self.input_ids)
