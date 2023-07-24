@@ -23,14 +23,6 @@ class DataArgs:
     prompt_template: str
     train_data_path: Optional[str] = field(default=None)
     eval_data_path: Optional[str] = field(default=None)
-    source_max_len: int = field(
-        default=1024, # should be able to accommodate the longest input question
-        metadata={"help": "Maximum source sequence length. Sequences will be right padded (and possibly truncated)."}
-    )
-    target_max_len: int = field(
-        default=256, # should be able to accommodate the longest SPARQL query 
-        metadata={"help": "Maximum target sequence length. Sequences will be right padded (and possibly truncated)."},
-    )
 
 
 @dataclass

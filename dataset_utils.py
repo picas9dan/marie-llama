@@ -23,7 +23,30 @@ def _get_target_col_name(template_name: str):
     raise ValueError(f"Invalid template_name: {template_name}. Must be either `alpaca`, `marie_no_context`, or `marie_with_context`.")
 
 
-class CausalLmDataset(Dataset):
+def _tokenize_fn(strings: Sequence[str], tokenizer: transformers.PreTrainedTokenizer):
+    tokenized_list = [
+        tokenizer(
+            text,
+            return_tensors="pt",
+            padding="longest",
+            max_length=tokenizer.model_max_length,
+            truncation=True,
+        )
+        for text in strings
+    ]
+    input_ids = labels = [tokenized.input_ids[0] for tokenized in tokenized_list]
+    input_ids_lens = labels_lens = [
+        tokenized.input_ids.ne(tokenizer.pad_token_id).sum().item() for tokenized in tokenized_list
+    ]
+    return dict(
+        input_ids=input_ids,
+        labels=labels,
+        input_ids_lens=input_ids_lens,
+        labels_lens=labels_lens,
+    )
+
+
+class SupervisedDataset(Dataset):
     def __init__(self, data_args: DataArgs, tokenizer: transformers.PreTrainedTokenizer, is_train: bool, is_supervised: bool):
         """
         Args:
@@ -32,42 +55,23 @@ class CausalLmDataset(Dataset):
                 `marie_no_context`, `marie_with_context`.
             tokenizer: Tokenizer to apply to the dataset.
         """
-        super(CausalLmDataset, self).__init__()
+        super(SupervisedDataset, self).__init__()
         data_path = data_args.train_data_path if is_train else data_args.eval_data_path
-        with open(data_path, "r", encoding="utf-8") as f:
+        with open(data_path, "r") as f:
             data = json.load(f)
 
-        sources = [
-            # tokenizer.bos_token + 
-            PROMPT_TEMPLATES[data_args.prompt_template].format(**example) for example in data]
-        tokenized_sources = tokenizer(
-            sources, 
-            max_length=data_args.source_max_len, 
-            truncation=True,
-            add_special_tokens=False,
-        )
+        sources = [PROMPT_TEMPLATES[data_args.prompt_template].format(**example) for example in data]
+        targets = [example[_get_target_col_name(data_args.prompt_template)] + tokenizer.eos_token for example in data]
 
-        if is_supervised:
-            targets = [example[_get_target_col_name(data_args.prompt_template)] + tokenizer.eos_token for example in data]
-            tokenized_targets = tokenizer(
-                targets,
-                max_length=data_args.target_max_len,
-                truncation=True,
-                add_special_tokens=False,
-            )
+        examples = [s + t for s, t in zip(sources, targets)]
+        examples_tokenized, sources_tokenized = [_tokenize_fn(strings, tokenizer) for strings in (examples, sources)]
+        input_ids = examples_tokenized["input_ids"]
+        labels = copy.deepcopy(input_ids)
+        for label, source_len in zip(labels, sources_tokenized["input_ids_lens"]):
+            label[:source_len] = IGNORE_INDEX
 
-            # Construct input_ids and labels
-            input_ids = []
-            labels = []
-            for source_input_ids, target_input_ids in zip(tokenized_sources["input_ids"], tokenized_targets["input_ids"]):
-                input_ids.append(torch.tensor(source_input_ids + target_input_ids))
-                labels.append(torch.tensor([IGNORE_INDEX for _ in range(len(source_input_ids))] + copy.deepcopy(target_input_ids)))
-
-            self.input_ids = input_ids
-            self.labels = labels
-        else:
-            self.input_ids = [torch.tensor(source_input_ids) for source_input_ids in tokenized_sources["input_ids"]]
-            self.labels = [torch.tensor([IGNORE_INDEX for _ in range(len(source_input_ids))]) for source_input_ids in tokenized_sources["input_ids"]]
+        self.input_ids = input_ids
+        self.labels = labels
 
     def __len__(self):
         return len(self.input_ids)
@@ -94,13 +98,13 @@ class CausalLmCollator():
 
 
 def get_data_module(data_args: DataArgs, tokenizer: transformers.PreTrainedTokenizer, do_eval: bool):
-    train_dataset = CausalLmDataset(
+    train_dataset = SupervisedDataset(
         data_args=data_args, 
         tokenizer=tokenizer, 
         is_train=True, 
         is_supervised=True
     )
-    eval_dataset = CausalLmDataset(
+    eval_dataset = SupervisedDataset(
         data_args=data_args, 
         tokenizer=tokenizer, 
         is_train=False,
