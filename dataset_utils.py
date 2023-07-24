@@ -117,3 +117,21 @@ def get_data_module(data_args: DataArgs, tokenizer: transformers.PreTrainedToken
         eval_dataset=eval_dataset,
         data_collator=data_collator
     )
+
+
+class UnsupervisedDataset(Dataset):
+    def __init__(self, data_args: DataArgs, tokenizer: transformers.PreTrainedTokenizer):
+        super(UnsupervisedDataset, self).__init__()
+        data_path = data_args.eval_data_path
+        with open(data_path, "r") as f:
+            data = json.load(f)
+
+        sources = [PROMPT_TEMPLATES[data_args.prompt_template].format(**example) for example in data]
+        self.sources_tokenized = _tokenize_fn(sources)
+
+    def __len__(self):
+        return len(self.sources_tokenized["input_ids"])
+
+    def __getitem__(self, i) -> Dict[str, torch.Tensor]:
+        return {k: v[i] for k, v in self.sources_tokenized.items()}
+    

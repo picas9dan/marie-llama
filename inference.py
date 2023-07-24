@@ -3,7 +3,7 @@ from transformers import GenerationConfig
 import torch
 
 from arguments_schema import DataArgs, GenArgs, InferArgs, ModelArgs
-from dataset_utils import CausalLmCollator, CausalLmDataset
+from dataset_utils import CausalLmCollator, SupervisedDataset, UnsupervisedDataset
 from model_utils import get_model_and_tokenizer
 from torch.utils.data import DataLoader
 
@@ -15,7 +15,7 @@ def infer():
     model, tokenizer = get_model_and_tokenizer(model_args, is_train=False)
     model.eval()
 
-    dataset = CausalLmDataset(
+    dataset = UnsupervisedDataset(
         data_args=data_args, 
         tokenizer=tokenizer, 
         is_train=False,
