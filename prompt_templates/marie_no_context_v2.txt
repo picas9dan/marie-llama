@@ -1,0 +1,7 @@
+Convert the following input question to a structured query.
+
+### Input:
+{input}
+
+
+### Response:
