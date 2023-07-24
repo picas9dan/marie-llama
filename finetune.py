@@ -77,7 +77,8 @@ def train():
     model_args, data_args, train_args = hfparser.parse_args_into_dataclasses()
     checkpoint_dir = get_last_checkpoint(train_args.output_dir)
 
-    model_args.lora_adapter_dir = os.path.join(checkpoint_dir, "adapter_model")
+    if checkpoint_dir:
+        model_args.lora_adapter_dir = os.path.join(checkpoint_dir, "adapter_model")
     model, tokenizer = get_model_and_tokenizer(model_args, is_train=True)
 
     data_module = get_data_module(data_args, tokenizer)
