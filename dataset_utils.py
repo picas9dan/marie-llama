@@ -37,7 +37,9 @@ class CausalLmDataset(Dataset):
         with open(data_path, "r", encoding="utf-8") as f:
             data = json.load(f)
 
-        sources = [tokenizer.bos_token + PROMPT_TEMPLATES[data_args.prompt_template].format(**example) for example in data]
+        sources = [
+            # tokenizer.bos_token + 
+            PROMPT_TEMPLATES[data_args.prompt_template].format(**example) for example in data]
         tokenized_sources = tokenizer(
             sources, 
             max_length=data_args.source_max_len, 

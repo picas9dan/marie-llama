@@ -13,12 +13,10 @@ import torch
 from arguments_schema import ModelArgs
 
 
-def get_model(model_args: ModelArgs, is_train: bool = False):
+def get_model(model_args: ModelArgs, is_train: bool):
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=model_args.bits == 4,
         load_in_8bit=model_args.bits == 8,
-        llm_int8_threshold=6.0,
-        llm_int8_has_fp16_weight=False,
         bnb_4bit_compute_dtype=torch.bfloat16,
         bnb_4bit_use_double_quant=True,
         bnb_4bit_quant_type="nf4",
@@ -26,9 +24,8 @@ def get_model(model_args: ModelArgs, is_train: bool = False):
     
     model = LlamaForCausalLM.from_pretrained(
         model_args.base_model,
-        device_map="auto",
+        device_map={"":0},
         quantization_config=bnb_config,
-        torch_dtype=torch.bfloat16,
         use_auth_token=os.getenv("HF_ACCESS_TOKEN")
     )
 
@@ -43,7 +40,7 @@ def get_model(model_args: ModelArgs, is_train: bool = False):
         print("Adding LoRA modules.")
         config = LoraConfig(
             task_type=TaskType.CAUSAL_LM,
-            inference_mode=False,
+            inference_mode=not is_train,
             r=model_args.lora_r,
             lora_alpha=model_args.lora_alpha,
             lora_dropout=model_args.lora_dropout,
