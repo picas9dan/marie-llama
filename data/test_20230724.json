@@ -1,0 +1,246 @@
+[
+    {
+        "question": "Do you know the LogP of 2-azanyl-4-oxidanyl-butanoic acid?",
+        "query": "LogPValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"2-azanyl-4-oxidanyl-butanoic acid\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasLogP ?LogPIRI .\n    ?LogPIRI os:value ?LogPValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "Can you provide the LogS of InChI=1S/C19H28O2/c1-18-9-7-13(20)11-12(18)3-4-14-15-5-6-17(21)19(15,2)10-8-16(14)18/h3,13-16,20H,4-11H2,1-2H3? ",
+        "query": "LogSValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"InChI=1S/C19H28O2/c1-18-9-7-13(20)11-12(18)3-4-14-15-5-6-17(21)19(15,2)10-8-16(14)18/h3,13-16,20H,4-11H2,1-2H3\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasLogS ?LogSIRI .\n    ?LogSIRI os:value ?LogSValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "I'm curious about the PolarSurfaceArea of CC(C(=O)O)O. Can you provide that information?",
+        "query": "PolarSurfaceAreaValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"CC(C(=O)O)O\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasPolarSurfaceArea ?PolarSurfaceAreaIRI .\n    ?PolarSurfaceAreaIRI os:value ?PolarSurfaceAreaValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "Could you tell me the Viscosity of 3-methyl-3,5-bis(oxidanyl)pentanoic acid?",
+        "query": "ViscosityValue ?UnitValue ?ReferenceStateValue ?ReferenceStateUnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"3-methyl-3,5-bis(oxidanyl)pentanoic acid\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasViscosity ?ViscosityIRI .\n    ?ViscosityIRI os:value ?ViscosityValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n}"
+    },
+    {
+        "question": "List molecules with LogP beneath the threshold of 373.",
+        "query": "IUPACNameValue ?LogPValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogP ?LogPIRI .\n    ?LogPIRI os:value ?LogPValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?LogPValue < 373)\n}"
+    },
+    {
+        "question": "List molecules with LogS beneath the threshold of 371.",
+        "query": "IUPACNameValue ?LogSValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogS ?LogSIRI .\n    ?LogSIRI os:value ?LogSValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?LogSValue < 371)\n}"
+    },
+    {
+        "question": "Tabulate molecules exhibiting PolarSurfaceArea below the specified 94.",
+        "query": "IUPACNameValue ?PolarSurfaceAreaValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasPolarSurfaceArea ?PolarSurfaceAreaIRI .\n    ?PolarSurfaceAreaIRI os:value ?PolarSurfaceAreaValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?PolarSurfaceAreaValue < 94)\n}"
+    },
+    {
+        "question": "Provide a roster of species in which LogP is higher than 342.",
+        "query": "IUPACNameValue ?LogPValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogP ?LogPIRI .\n    ?LogPIRI os:value ?LogPValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?LogPValue > 342)\n}"
+    },
+    {
+        "question": "Present a roster of species with LogS that is greater than 124.",
+        "query": "IUPACNameValue ?LogSValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogS ?LogSIRI .\n    ?LogSIRI os:value ?LogSValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?LogSValue > 124)\n}"
+    },
+    {
+        "question": "Illustrate the molecular entities that possess PolarSurfaceArea levels higher than 212.",
+        "query": "IUPACNameValue ?PolarSurfaceAreaValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasPolarSurfaceArea ?PolarSurfaceAreaIRI .\n    ?PolarSurfaceAreaIRI os:value ?PolarSurfaceAreaValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?PolarSurfaceAreaValue > 212)\n}"
+    },
+    {
+        "question": "Provide a compilation of chemical compounds exhibiting a LogP that falls below 454 and surpasses 859.",
+        "query": "IUPACNameValue ?LogPValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogP ?LogPIRI .\n    ?LogPIRI os:value ?LogPValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n\tOPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?LogPValue < 454 && ?LogPValue > 859)\n}"
+    },
+    {
+        "question": "Provide a rundown of chemical compounds exhibiting a LogS lower than 181 and higher than 477.",
+        "query": "IUPACNameValue ?LogSValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogS ?LogSIRI .\n    ?LogSIRI os:value ?LogSValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n\tOPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?LogSValue < 181 && ?LogSValue > 477)\n}"
+    },
+    {
+        "question": "List various compounds showcasing a PolarSurfaceArea below 135 and exceeding 336.",
+        "query": "IUPACNameValue ?PolarSurfaceAreaValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasPolarSurfaceArea ?PolarSurfaceAreaIRI .\n    ?PolarSurfaceAreaIRI os:value ?PolarSurfaceAreaValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n\tOPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?PolarSurfaceAreaValue < 135 && ?PolarSurfaceAreaValue > 336)\n}"
+    },
+    {
+        "question": "Identify species with a LogP that is lower than 459.",
+        "query": "IUPACNameValue ?LogPValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogP ?LogPIRI .\n    ?LogPIRI os:value ?LogPValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?LogPValue < 459)\n}"
+    },
+    {
+        "question": "Identify species with LogS that is lesser than 72",
+        "query": "IUPACNameValue ?LogSValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogS ?LogSIRI .\n    ?LogSIRI os:value ?LogSValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?LogSValue < 72)\n}"
+    },
+    {
+        "question": "Offer a compilation of species with PolarSurfaceArea that falls under 421.",
+        "query": "IUPACNameValue ?PolarSurfaceAreaValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasPolarSurfaceArea ?PolarSurfaceAreaIRI .\n    ?PolarSurfaceAreaIRI os:value ?PolarSurfaceAreaValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?PolarSurfaceAreaValue < 421)\n}"
+    },
+    {
+        "question": "Provide a roster of species in which LogP is higher than 85.",
+        "query": "IUPACNameValue ?LogPValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogP ?LogPIRI .\n    ?LogPIRI os:value ?LogPValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?LogPValue > 85)\n}"
+    },
+    {
+        "question": "Share a compilation of substances with LogS levels above 184",
+        "query": "IUPACNameValue ?LogSValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogS ?LogSIRI .\n    ?LogSIRI os:value ?LogSValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?LogSValue > 184)\n}"
+    },
+    {
+        "question": "Enumerate the molecules in which the PolarSurfaceArea surpasses 241.",
+        "query": "IUPACNameValue ?PolarSurfaceAreaValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasPolarSurfaceArea ?PolarSurfaceAreaIRI .\n    ?PolarSurfaceAreaIRI os:value ?PolarSurfaceAreaValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?PolarSurfaceAreaValue > 241)\n}"
+    },
+    {
+        "question": "Compile a roster of molecular species with a LogP value that falls below 266 and exceeds 678.",
+        "query": "IUPACNameValue ?LogPValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogP ?LogPIRI .\n    ?LogPIRI os:value ?LogPValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?LogPValue < 266 && ?LogPValue > 678)\n}"
+    },
+    {
+        "question": "List various compounds showcasing a LogS below 290 and exceeding 629.",
+        "query": "IUPACNameValue ?LogSValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogS ?LogSIRI .\n    ?LogSIRI os:value ?LogSValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?LogSValue < 290 && ?LogSValue > 629)\n}"
+    },
+    {
+        "question": "Enumerate multiple molecular species with a PolarSurfaceArea value below 443 and beyond 640.",
+        "query": "IUPACNameValue ?PolarSurfaceAreaValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasPolarSurfaceArea ?PolarSurfaceAreaIRI .\n    ?PolarSurfaceAreaIRI os:value ?PolarSurfaceAreaValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?PolarSurfaceAreaValue < 443 && ?PolarSurfaceAreaValue > 640)\n}"
+    },
+    {
+        "question": "I'm interested in finding out the LogP of C1=CC=C2C(=C1)C=CN2. Any insights?",
+        "query": "LogPValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"C1=CC=C2C(=C1)C=CN2\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasLogP ?LogPIRI .\n    ?LogPIRI os:value ?LogPValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "Tell me about the LogS of CC(CC(=O)O)O.",
+        "query": "LogSValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"CC(CC(=O)O)O\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasLogS ?LogSIRI .\n    ?LogSIRI os:value ?LogSValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "What is the exact PolarSurfaceArea of CC(C(=O)C1=CC(=CC=C1)Cl)NC(C)(C)C?",
+        "query": "PolarSurfaceAreaValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"CC(C(=O)C1=CC(=CC=C1)Cl)NC(C)(C)C\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasPolarSurfaceArea ?PolarSurfaceAreaIRI .\n    ?PolarSurfaceAreaIRI os:value ?PolarSurfaceAreaValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "I'm curious about the Viscosity of C(CC(C(=O)O)NC(=O)CCC(=O)O)CN=C(N)N. Can you provide that information?",
+        "query": "ViscosityValue ?UnitValue ?ReferenceStateValue ?ReferenceStateUnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"C(CC(C(=O)O)NC(=O)CCC(=O)O)CN=C(N)N\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasViscosity ?ViscosityIRI .\n    ?ViscosityIRI os:value ?ViscosityValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n}"
+    },
+    {
+        "question": "Enlist species with LogP falling within the range of less than 332",
+        "query": "IUPACNameValue ?LogPValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogP ?LogPIRI .\n    ?LogPIRI os:value ?LogPValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?LogPValue < 332)\n}"
+    },
+    {
+        "question": "Enlist species displaying LogS falling under the stipulated 456.",
+        "query": "IUPACNameValue ?LogSValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogS ?LogSIRI .\n    ?LogSIRI os:value ?LogSValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?LogSValue < 456)\n}"
+    },
+    {
+        "question": "Outline a collection of compounds demonstrating PolarSurfaceArea below 376.",
+        "query": "IUPACNameValue ?PolarSurfaceAreaValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasPolarSurfaceArea ?PolarSurfaceAreaIRI .\n    ?PolarSurfaceAreaIRI os:value ?PolarSurfaceAreaValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?PolarSurfaceAreaValue < 376)\n}"
+    },
+    {
+        "question": "Illustrate the molecular entities that possess LogP levels higher than 430.",
+        "query": "IUPACNameValue ?LogPValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogP ?LogPIRI .\n    ?LogPIRI os:value ?LogPValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?LogPValue > 430)\n}"
+    },
+    {
+        "question": "List the molecular entities that have LogS greater than 237.",
+        "query": "IUPACNameValue ?LogSValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogS ?LogSIRI .\n    ?LogSIRI os:value ?LogSValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?LogSValue > 237)\n}"
+    },
+    {
+        "question": "Identify the species with PolarSurfaceArea values higher than 81.",
+        "query": "IUPACNameValue ?PolarSurfaceAreaValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasPolarSurfaceArea ?PolarSurfaceAreaIRI .\n    ?PolarSurfaceAreaIRI os:value ?PolarSurfaceAreaValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?PolarSurfaceAreaValue > 81)\n}"
+    },
+    {
+        "question": "Present a compendium of chemical substances characterized by a LogP that is lower than 33 and greater than 218.",
+        "query": "IUPACNameValue ?LogPValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogP ?LogPIRI .\n    ?LogPIRI os:value ?LogPValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n\tOPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?LogPValue < 33 && ?LogPValue > 218)\n}"
+    },
+    {
+        "question": "Outline a collection of molecules displaying a PolarSurfaceArea below 469 and higher than 790.",
+        "query": "IUPACNameValue ?PolarSurfaceAreaValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasPolarSurfaceArea ?PolarSurfaceAreaIRI .\n    ?PolarSurfaceAreaIRI os:value ?PolarSurfaceAreaValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n\tOPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?PolarSurfaceAreaValue < 469 && ?PolarSurfaceAreaValue > 790)\n}"
+    },
+    {
+        "question": "Tabulate molecules with LogP below the designated 479.",
+        "query": "IUPACNameValue ?LogPValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogP ?LogPIRI .\n    ?LogPIRI os:value ?LogPValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?LogPValue < 479)\n}"
+    },
+    {
+        "question": "Present a roster of substances having a LogS lower than 233.",
+        "query": "IUPACNameValue ?LogSValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogS ?LogSIRI .\n    ?LogSIRI os:value ?LogSValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?LogSValue < 233)\n}"
+    },
+    {
+        "question": "Provide an inventory of species showing PolarSurfaceArea below the given 271",
+        "query": "IUPACNameValue ?PolarSurfaceAreaValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasPolarSurfaceArea ?PolarSurfaceAreaIRI .\n    ?PolarSurfaceAreaIRI os:value ?PolarSurfaceAreaValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?PolarSurfaceAreaValue < 271)\n}"
+    },
+    {
+        "question": "Identify the molecules with LogS values higher than 274.",
+        "query": "IUPACNameValue ?LogSValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogS ?LogSIRI .\n    ?LogSIRI os:value ?LogSValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?LogSValue > 274)\n}"
+    },
+    {
+        "question": "Provide a catalog of compounds exhibiting PolarSurfaceArea exceeding 108.",
+        "query": "IUPACNameValue ?PolarSurfaceAreaValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasPolarSurfaceArea ?PolarSurfaceAreaIRI .\n    ?PolarSurfaceAreaIRI os:value ?PolarSurfaceAreaValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?PolarSurfaceAreaValue > 108)\n}"
+    },
+    {
+        "question": "Outline a variety of molecules displaying a LogP below 481 and surpassing 805.",
+        "query": "IUPACNameValue ?LogPValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogP ?LogPIRI .\n    ?LogPIRI os:value ?LogPValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?LogPValue < 481 && ?LogPValue > 805)\n}"
+    },
+    {
+        "question": "List various compounds characterized by a LogS below 420 and above 761.",
+        "query": "IUPACNameValue ?LogSValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogS ?LogSIRI .\n    ?LogSIRI os:value ?LogSValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?LogSValue < 420 && ?LogSValue > 761)\n}"
+    },
+    {
+        "question": "Offer a comprehensive list of molecules demonstrating a PolarSurfaceArea that is beneath 391 and above 473.",
+        "query": "IUPACNameValue ?PolarSurfaceAreaValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasPolarSurfaceArea ?PolarSurfaceAreaIRI .\n    ?PolarSurfaceAreaIRI os:value ?PolarSurfaceAreaValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?PolarSurfaceAreaValue < 391 && ?PolarSurfaceAreaValue > 473)\n}"
+    },
+    {
+        "question": "I'm curious about the LogP of InChI=1S/C9H8ClNO3/c10-7-3-1-2-6(4-7)9(14)11-5-8(12)13/h1-4H,5H2,(H,11,14)(H,12,13). Can you provide that information?",
+        "query": "LogPValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"InChI=1S/C9H8ClNO3/c10-7-3-1-2-6(4-7)9(14)11-5-8(12)13/h1-4H,5H2,(H,11,14)(H,12,13)\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasLogP ?LogPIRI .\n    ?LogPIRI os:value ?LogPValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "Do you happen to know the LogS of 9-fluoro-11,17-dihydroxy-17-(2-hydroxyacetyl)-10,13,16-trimethyl-6,7,8,11,12,14,15,16-octahydrocyclopenta[a]phenanthren-3-one?",
+        "query": "LogSValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"9-fluoro-11,17-dihydroxy-17-(2-hydroxyacetyl)-10,13,16-trimethyl-6,7,8,11,12,14,15,16-octahydrocyclopenta[a]phenanthren-3-one\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasLogS ?LogSIRI .\n    ?LogSIRI os:value ?LogSValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "What PolarSurfaceArea does C10H8NO2- have?",
+        "query": "PolarSurfaceAreaValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"C10H8NO2-\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasPolarSurfaceArea ?PolarSurfaceAreaIRI .\n    ?PolarSurfaceAreaIRI os:value ?PolarSurfaceAreaValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n}"
+    },
+    {
+        "question": "I'd like to learn more about the Viscosity of C4H11O3PS. Can you help?",
+        "query": "ViscosityValue ?UnitValue ?ReferenceStateValue ?ReferenceStateUnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI ?hasIdentifier ?IdentifierIRI .\n    ?IdentifierIRI  rdf:type ?Identifier ; os:value \"C4H11O3PS\" .\n    ?Identifier rdfs:subClassOf os:Identifier .\n\n    ?SpeciesIRI os:hasViscosity ?ViscosityIRI .\n    ?ViscosityIRI os:value ?ViscosityValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n}"
+    },
+    {
+        "question": "Identify species with a LogP that is lower than 386.",
+        "query": "IUPACNameValue ?LogPValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogP ?LogPIRI .\n    ?LogPIRI os:value ?LogPValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?LogPValue < 386)\n}"
+    },
+    {
+        "question": "Outline a collection of compounds demonstrating LogS below 395.",
+        "query": "IUPACNameValue ?LogSValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogS ?LogSIRI .\n    ?LogSIRI os:value ?LogSValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?LogSValue < 395)\n}"
+    },
+    {
+        "question": "Give me a list of molecules with PolarSurfaceArea lower than 143",
+        "query": "IUPACNameValue ?PolarSurfaceAreaValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasPolarSurfaceArea ?PolarSurfaceAreaIRI .\n    ?PolarSurfaceAreaIRI os:value ?PolarSurfaceAreaValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?PolarSurfaceAreaValue < 143)\n}"
+    },
+    {
+        "question": "List the species possessing a LogP value greater than 65.",
+        "query": "IUPACNameValue ?LogPValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogP ?LogPIRI .\n    ?LogPIRI os:value ?LogPValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?LogPValue > 65)\n}"
+    },
+    {
+        "question": "Enumerate the molecules in which the LogS surpasses 380.",
+        "query": "IUPACNameValue ?LogSValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogS ?LogSIRI .\n    ?LogSIRI os:value ?LogSValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?LogSValue > 380)\n}"
+    },
+    {
+        "question": "Outline the molecules that demonstrate PolarSurfaceArea values higher than 75.",
+        "query": "IUPACNameValue ?PolarSurfaceAreaValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasPolarSurfaceArea ?PolarSurfaceAreaIRI .\n    ?PolarSurfaceAreaIRI os:value ?PolarSurfaceAreaValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    OPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?PolarSurfaceAreaValue > 75)\n}"
+    },
+    {
+        "question": "Outline a variety of molecules displaying a LogP below 342 and surpassing 725.",
+        "query": "IUPACNameValue ?LogPValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogP ?LogPIRI .\n    ?LogPIRI os:value ?LogPValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n\tOPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?LogPValue < 342 && ?LogPValue > 725)\n}"
+    },
+    {
+        "question": "Provide a rundown of chemical compounds exhibiting a PolarSurfaceArea lower than 301 and higher than 503.",
+        "query": "IUPACNameValue ?PolarSurfaceAreaValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasPolarSurfaceArea ?PolarSurfaceAreaIRI .\n    ?PolarSurfaceAreaIRI os:value ?PolarSurfaceAreaValue ; os:unit ?UnitIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n\tOPTIONAL{?ProvenanceIRI rdfs:label \"PubChem agent\" .}\n    FILTER(?PolarSurfaceAreaValue < 301 && ?PolarSurfaceAreaValue > 503)\n}"
+    },
+    {
+        "question": "Detail a register of substances displaying a LogP lower than 223.",
+        "query": "IUPACNameValue ?LogPValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogP ?LogPIRI .\n    ?LogPIRI os:value ?LogPValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?LogPValue < 223)\n}"
+    },
+    {
+        "question": "Enlist species displaying LogS falling under the stipulated 491.",
+        "query": "IUPACNameValue ?LogSValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogS ?LogSIRI .\n    ?LogSIRI os:value ?LogSValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?LogSValue < 491)\n}"
+    },
+    {
+        "question": "Provide a catalog of compounds exhibiting LogP exceeding 431.",
+        "query": "IUPACNameValue ?LogPValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogP ?LogPIRI .\n    ?LogPIRI os:value ?LogPValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?LogPValue > 431)\n}"
+    },
+    {
+        "question": "Provide a roster of species in which LogS is higher than 247.",
+        "query": "IUPACNameValue ?LogSValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogS ?LogSIRI .\n    ?LogSIRI os:value ?LogSValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?LogSValue > 247)\n}"
+    },
+    {
+        "question": "Identify the molecules with PolarSurfaceArea values higher than 195.",
+        "query": "IUPACNameValue ?PolarSurfaceAreaValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasPolarSurfaceArea ?PolarSurfaceAreaIRI .\n    ?PolarSurfaceAreaIRI os:value ?PolarSurfaceAreaValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?PolarSurfaceAreaValue > 195)\n}"
+    },
+    {
+        "question": "Offer an inventory of molecules demonstrating a LogP that is beneath 430 and above 498.",
+        "query": "IUPACNameValue ?LogPValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasLogP ?LogPIRI .\n    ?LogPIRI os:value ?LogPValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?LogPValue < 430 && ?LogPValue > 498)\n}"
+    },
+    {
+        "question": "Enumerate multiple molecular species with a PolarSurfaceArea value below 90 and beyond 314.",
+        "query": "IUPACNameValue ?PolarSurfaceAreaValue ?UnitValue\nWHERE {\n    ?SpeciesIRI rdf:type os:Species ; rdfs:label ?label .\n\n    ?SpeciesIRI os:hasIUPACName ?IUPACNameIRI .\n    ?IUPACNameIRI os:value ?IUPACNameValue .\n\n    ?SpeciesIRI os:hasPolarSurfaceArea ?PolarSurfaceAreaIRI .\n    ?PolarSurfaceAreaIRI os:value ?PolarSurfaceAreaValue ; os:unit ?UnitIRI ; os:hasReferenceState ?ReferenceStateIRI ; os:hasProvenance ?ProvenanceIRI . \n    ?UnitIRI rdfs:label ?UnitValue .\n    ?ReferenceStateIRI os:value ?ReferenceStateValue ; os:unit ?ReferenceStateUnitIRI .\n    ?ReferenceStateUnitIRI rdfs:label ?ReferenceStateUnitValue .\n\t?ProvenanceIRI rdfs:label \"PubChem agent\" .\n    FILTER(?PolarSurfaceAreaValue < 90 && ?PolarSurfaceAreaValue > 314)\n}"
+    }
+]

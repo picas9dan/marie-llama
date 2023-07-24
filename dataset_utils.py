@@ -23,8 +23,8 @@ def _get_target_col_name(template_name: str):
     raise ValueError(f"Invalid template_name: {template_name}. Must be either `alpaca`, `marie_no_context`, or `marie_with_context`.")
 
 
-class SupervisedDataset(Dataset):
-    def __init__(self, data_path: str, data_args: DataArgs, tokenizer: transformers.PreTrainedTokenizer):
+class CausalLmDataset(Dataset):
+    def __init__(self, data_args: DataArgs, tokenizer: transformers.PreTrainedTokenizer, is_train: bool, is_supervised: bool):
         """
         Args:
             data_path: Path to the dataset file.
@@ -32,12 +32,16 @@ class SupervisedDataset(Dataset):
                 `marie_no_context`, `marie_with_context`.
             tokenizer: Tokenizer to apply to the dataset.
         """
-        super(SupervisedDataset, self).__init__()
+        super(CausalLmDataset, self).__init__()
+        data_path = data_args.train_data_path if is_train else data_args.eval_data_path
         with open(data_path, "r", encoding="utf-8") as f:
             data = json.load(f)
 
         sources = [tokenizer.bos_token + PROMPT_TEMPLATES[data_args.prompt_template].format(**example) for example in data]
-        targets = [example[_get_target_col_name(data_args.prompt_template)] + tokenizer.eos_token for example in data]
+        if is_supervised:
+            targets = [example[_get_target_col_name(data_args.prompt_template)] + tokenizer.eos_token for example in data]
+        else:
+            targets = ["" for _ in data]
 
         tokenized_sources = tokenizer(
             sources, 
@@ -70,26 +74,36 @@ class SupervisedDataset(Dataset):
     
 
 @dataclass
-class DataCollatorForSupervisedDataset():
+class CausalLmCollator():
     tokenizer: transformers.PreTrainedTokenizer
 
     def __call__(self, instances: Sequence[Dict]):
         input_ids, labels = ([instance[x] for instance in instances] for x in ("input_ids", "labels"))
 
-        input_ids = pad_sequence(input_ids, batch_first=True, padding_value=self.tokenizer.pad_token_id)
-        labels = pad_sequence(labels, batch_first=True, padding_value=IGNORE_INDEX)
+        input_ids = pad_sequence(input_ids, batch_first=True, padding_value=self.tokenizer.pad_token_id).to("cuda")
+        labels = pad_sequence(labels, batch_first=True, padding_value=IGNORE_INDEX).to("cuda")
 
         return dict(
             input_ids=input_ids,
             labels=labels,
-            attention_mask=input_ids.ne(self.tokenizer.pad_token_id)
+            attention_mask=input_ids.ne(self.tokenizer.pad_token_id).to("cuda")
         )
 
 
 def get_data_module(data_args: DataArgs, tokenizer: transformers.PreTrainedTokenizer):
-    train_dataset = SupervisedDataset(data_path=data_args.train_data_path, data_args=data_args, tokenizer=tokenizer)
-    eval_dataset = SupervisedDataset(data_path=data_args.eval_data_path, data_args=data_args, tokenizer=tokenizer)
-    data_collator = DataCollatorForSupervisedDataset(tokenizer=tokenizer)
+    train_dataset = CausalLmDataset(
+        data_args=data_args, 
+        tokenizer=tokenizer, 
+        is_train=True, 
+        is_supervised=True
+    )
+    eval_dataset = CausalLmDataset(
+        data_args=data_args, 
+        tokenizer=tokenizer, 
+        is_train=False,
+        is_supervised=True
+    )
+    data_collator = CausalLmCollator(tokenizer=tokenizer)
 
     return dict(
         train_dataset=train_dataset,
