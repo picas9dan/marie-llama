@@ -12,7 +12,7 @@ def infer():
     hfparser = transformers.HfArgumentParser((ModelArgs, DataArgs, GenArgs, InferArgs))
     model_args, data_args, gen_args, infer_args = hfparser.parse_args_into_dataclasses()
 
-    model, tokenizer = get_model_and_tokenizer(model_args)
+    model, tokenizer = get_model_and_tokenizer(model_args, is_train=False)
     model.eval()
 
     dataset = CausalLmDataset(
