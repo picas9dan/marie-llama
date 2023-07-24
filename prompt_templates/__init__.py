@@ -10,7 +10,7 @@ def _read_file(filename: str):
         content = f.read()
     return content
 
-_template_names = ["alpaca", "marie_no_context", "marie_with_context"]
+_template_names = ["alpaca", "marie_no_context", "marie_with_context", "simple_delimiter", "marie_no_context_v2"]
 PROMPT_TEMPLATES = {
     template_name: _read_file(template_name + ".txt") for template_name in _template_names
 }
