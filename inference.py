@@ -36,7 +36,7 @@ def infer():
             predictions.extend(output_texts)
 
     with open(infer_args.output_file, "w") as f:
-        f.writelines(predictions)
+        f.write("\n\n".join(predictions) + "\n")
 
 
 if __name__ == "__main__":
