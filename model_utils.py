@@ -1,6 +1,4 @@
 import os
-import logging
-from typing import Optional
 
 from peft import (
     get_peft_model, 
@@ -13,9 +11,6 @@ from transformers import BitsAndBytesConfig, LlamaForCausalLM, LlamaTokenizer
 import torch
 
 from arguments_schema import ModelArgs
-
-
-logger = logging.getLogger('root')
 
 
 def get_model(model_args: ModelArgs, is_train: bool = False):
@@ -42,10 +37,10 @@ def get_model(model_args: ModelArgs, is_train: bool = False):
         model.gradient_checkpointing_enable()
     
     if model_args.lora_adapter_dir is not None:
-        logger.info("Loading adapters from disk.")
+        print("Loading adapters from disk.")
         model = PeftModel.from_pretrained(model, model_args.lora_adapter_dir, is_trainable=True)
     else:
-        logger.info("Adding LoRA modules.")
+        print("Adding LoRA modules.")
         config = LoraConfig(
             task_type=TaskType.CAUSAL_LM,
             inference_mode=False,
@@ -60,7 +55,7 @@ def get_model(model_args: ModelArgs, is_train: bool = False):
         model.config.use_cache = False
         model.print_trainable_parameters()
         
-    logger.info("Loaded model.")
+    print("Loaded model.")
 
     return model
 

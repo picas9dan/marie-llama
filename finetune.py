@@ -1,8 +1,6 @@
 # Adapted from https://github.com/artidoro/qlora/blob/main/qlora.py and https://github.com/tatsu-lab/stanford_alpaca/blob/main/train.py
 
-from datetime import datetime
 import json
-import logging
 import os
 
 from transformers import Seq2SeqTrainer
@@ -14,22 +12,13 @@ from dataset_utils import get_data_module
 from model_utils import get_model_and_tokenizer
 
 
-logging.basicConfig(
-    filename=f"finetune_{datetime.today().strftime('%Y-%m-%d %H:%M:%S')}.log",
-    format="%(asctime)s {%(pathname)s:%(lineno)d} %(name)s %(levelname)s - %(message)s",
-    datefmt="%H:%M:%S",
-    level=logging.DEBUG
-)
-logger = logging.getLogger(__name__)
-
-
 def get_last_checkpoint(output_dir: str):
     """Retrieves the last checkpoint directory."""
     if not os.path.isdir(output_dir):
         return None # first training
     
     if os.path.exists(os.path.join(output_dir, "completed")): 
-        logger.info('Detected that training was already completed!')
+        print('Detected that training was already completed!')
         return None
     
     max_step = 0
@@ -40,14 +29,14 @@ def get_last_checkpoint(output_dir: str):
         return None # training started, but no checkpoint
     
     checkpoint_dir = os.path.join(output_dir, f'checkpoint-{max_step}')
-    logger.info(f"Found a previous checkpoint at: {checkpoint_dir}")
+    print(f"Found a previous checkpoint at: {checkpoint_dir}")
 
     return checkpoint_dir # checkpoint found!
 
 
 class SavePeftModelCallback(transformers.TrainerCallback):
     def save_model(self, args, state, kwargs):
-        logger.info("Saving PEFT checkpoint...")
+        print("Saving PEFT checkpoint...")
         if state.best_model_checkpoint is not None:
             checkpoint_folder = os.path.join(state.best_model_checkpoint, "adapter_model")
         else:
@@ -94,7 +83,7 @@ def train():
     all_metrics = dict(run_name=train_args.run_name)
 
     if train_args.do_train:
-        logger.info("*** Train ***")
+        print("*** Train ***")
         train_result = trainer.train()
         metrics = train_result.metrics
         trainer.log_metrics("train", metrics)
@@ -103,7 +92,7 @@ def train():
         all_metrics.update(metrics)
 
     if train_args.do_eval:
-        logger.info("*** Evaluate ***")
+        print("*** Evaluate ***")
         metrics = trainer.evaluate(metric_key_prefix="eval")
         trainer.log_metrics("eval", metrics)
         trainer.save_metrics("eval", metrics)
@@ -121,5 +110,5 @@ if __name__ == "__main__":
     try:
         train()
     except Exception as e:
-        logger.error(e)
+        print(e)
         raise e
