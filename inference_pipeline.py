@@ -2,8 +2,11 @@ import os
 
 import torch
 from transformers import LlamaForCausalLM, LlamaTokenizer, BitsAndBytesConfig
+import transformers
+from transformers.pipelines.pt_utils import KeyDataset
 from peft import PeftModel
 from datasets import Dataset
+from tqdm.auto import tqdm
 
 
 def infer():
@@ -31,20 +34,20 @@ def infer():
     )
     tokenizer.pad_token_id = 0
 
-    data = Dataset.from_json("./data/test_20230724.json")
-    inputs = [
-        tokenizer(text + "\n\n###\n\n", return_tensors="pt") 
-        for text in data["question"]
-    ]
-    with torch.no_grad():
-        outputs = [
-            model.generate(
-                input_ids=x["input_ids"].to("cuda"), max_new_tokens=256
-            ) for x in inputs
-        ]
+    dataset = Dataset.from_json("./data/test_20230724.json")
+    pipe = transformers.pipeline(
+        "text-generation",
+        model=model,
+        torch_dtype=torch.float16,
+        device_map={"": 0}
+    )
+
+    predictions = []
+    for out in tqdm(pipe(KeyDataset(dataset, "question"))):
+        predictions.append(out)
 
     with open("./predictions_20230724_minimal.txt", "r") as f:
-        f.write("\n\n".join(outputs) + "\n")
+        f.write("\n\n".join(predictions) + "\n")
 
 if __name__ == "__main__":
     infer()

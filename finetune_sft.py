@@ -5,6 +5,7 @@ from transformers import LlamaForCausalLM, LlamaTokenizer, BitsAndBytesConfig
 from peft import prepare_model_for_kbit_training, LoraConfig, get_peft_model
 from datasets import Dataset
 from transformers import Trainer, TrainingArguments, DataCollatorForLanguageModeling
+from trl import SFTTrainer
 
 def print_trainable_parameters(model):
     """
@@ -23,9 +24,15 @@ def print_trainable_parameters(model):
 
 PROMPT_TEMPLATE = "{question}\n\n###\n\n{query}"
 
-def construct_example(example):
-    example["sentence"] = PROMPT_TEMPLATE.format(**example)
-    return example
+def construct_examples(examples):
+    output_texts = []
+
+    for i in range(len(examples["question"])):
+        example = {k: v[i] for k, v in examples.items()}
+        text = PROMPT_TEMPLATE.format(**example)
+        output_texts.append(text)
+
+    return output_texts
 
 
 def main():
@@ -43,10 +50,8 @@ def main():
         device_map={"": 0},
         use_auth_token=os.getenv("HF_ACCESS_TOKEN"),
     )
-    model.gradient_checkpointing_enable()
-    model = prepare_model_for_kbit_training(model)
 
-    config = LoraConfig(
+    peft_config = LoraConfig(
         r=8,
         lora_alpha=32,
         target_modules=["q_proj", "v_proj"],
@@ -54,34 +59,18 @@ def main():
         bias="none",
         task_type="CAUSAL_LM"
     )
-    model = get_peft_model(model, config)
-    print_trainable_parameters(model)
 
-    tokenizer = LlamaTokenizer.from_pretrained(
-        base_model,
-        use_auth_token=os.getenv("HF_ACCESS_TOKEN"),
-    )
+    tokenizer = LlamaTokenizer.from_pretrained(base_model)
     tokenizer.pad_token_id = tokenizer.unk_token_id
 
-    data = Dataset.from_json("./data/train_full_20230721.json")
-    data = data.map(construct_example)
-    data = data.map(lambda samples: tokenizer(samples["sentence"]), batched=True)
+    dataset = Dataset.from_json("./data/train_full_20230721.json")
 
-    trainer = Trainer(
+    trainer = SFTTrainer(
         model=model,
-        train_dataset=data,
-        args=TrainingArguments(
-            per_device_train_batch_size=1,
-            gradient_accumulation_steps=4,
-            warmup_steps=2,
-            max_steps=50,
-            learning_rate=2e-4,
-            fp16=True,
-            logging_steps=1,
-            output_dir="/rds/user/nmdt2/hpc-work/outputs/20230724_minimal",
-            optim="paged_adamw_8bit"
-        ),
-        data_collator=DataCollatorForLanguageModeling(tokenizer, mlm=False),
+        peft_config=peft_config,
+        tokenizer=tokenizer,
+        train_dataset=dataset,
+        formatting_func=construct_examples,
     )
 
     model.config.use_cache = False  # silence the warnings. Please re-enable for inference!
