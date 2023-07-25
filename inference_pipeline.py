@@ -1,3 +1,4 @@
+import json
 import os
 
 import torch
@@ -37,7 +38,7 @@ def infer():
         base_model,
         use_auth_token=os.getenv("HF_ACCESS_TOKEN"),
     )
-    tokenizer.pad_token_id = 0
+    tokenizer.pad_token_id = tokenizer.unk_token_id
 
     dataset = Dataset.from_json("./data/test_20230724.json")
     dataset = dataset.map(add_delimiter)
@@ -45,6 +46,9 @@ def infer():
     pipe = transformers.pipeline(
         "text-generation",
         model=model,
+        tokenizer=tokenizer,
+        eos_token_id=tokenizer.eos_token_id,
+        max_length=512,
         torch_dtype=torch.float16,
         device_map={"": 0}
     )
@@ -53,8 +57,11 @@ def infer():
     for out in tqdm(pipe(KeyDataset(dataset, "question"))):
         predictions.append(out)
 
-    with open("./predictions_20230724_minimal.txt", "r") as f:
-        f.write("\n\n".join(predictions) + "\n")
+    print(predictions)
+
+    with open("./predictions_20230725_0.json", "w") as f:
+        json.dump(predictions, f)
+
 
 if __name__ == "__main__":
     infer()
