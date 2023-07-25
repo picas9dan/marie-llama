@@ -28,23 +28,58 @@
 
 ## Data Generation/Preparation
 
-## Inference
-
-### py
-
+```{json}
+[
+   {
+      "question": "",
+      "query": ""
+   }
+]
 ```
-python
-    --model_name_or_path <>
-
-```
-
-### cpp
 
 ## Fine-tuning
 
+For a list all arguments that can be passed to the fine-tune script, see classes `arguments_schema.ModelArguments`, `arguments_schema.DatasetArguments` and `transformers.TrainingArguments`.
+
+Example usage:
+
 ```
 python finetune.py
-    --per_device_train_batch_size
+   --base_model "meta-llama/Llama-2-70b-hf" \
+   --data_path "./data/train.json" \
+   --prompt_template "simple_delimiter" \
+   --bits 4 \
+   --lora_r 64 \
+   --lora_alpha 16 \
+   --lora_dropout 0.1 \
+   --per_device_train_batch_size 4 \
+   --gradient_accumulation_steps 4 \
+   --gradient_checkpointing \
+   --warmup_steps 2 \
+   --learning_rates 0.0002 \
+   --bf16 \
+   --save_steps 10 \
+   --logging_steps 1 \
+   --output_dir ./outputs \
+   --num_train_epochs 3 \
+   --optim "paged_adamw_8bit"
+```
+
+## Inference
+
+For a list of all arguments that can be passed to the inference script, see classes `arguments_schema.ModelArguments`, `arguments_schema.DatasetArguments`, and `arguments_schema.InferenceArguments`.
+
+Example usage:
+
+```
+python inference.py
+   --base_model "meta-llama/Llama-2-70b-hf" \
+   --lora_adapter_dir "./outputs/adapter_model" \
+   --data_path "./data/test.json" \
+   --prompt_template "simple_delimiter" \
+   --bits 4 \
+   --batch_size 1 \
+   --output_file "./outputs/predictions.json"
 ```
 
 ## Evaluation
