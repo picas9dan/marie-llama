@@ -1,0 +1,4 @@
+{
+    "prompt": "{question}\n\n###\n\n",
+    "completion": "{query}"
+}

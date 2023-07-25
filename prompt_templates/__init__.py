@@ -1,3 +1,4 @@
+import json
 import pathlib
 import os
 
@@ -5,12 +6,18 @@ import os
 FILE_DIR = pathlib.Path(__file__).parent.resolve()
 
 
-def _read_file(filename: str):
-    with open(os.path.join(FILE_DIR, filename), "r") as f:
-        content = f.read()
+def _read_json(json_path: str):
+    with open(json_path, "r") as f:
+        content = json.load(f)
     return content
 
-_template_names = ["alpaca", "marie_no_context", "marie_with_context", "simple_delimiter", "marie_no_context_v2"]
-PROMPT_TEMPLATES = {
-    template_name: _read_file(template_name + ".txt") for template_name in _template_names
+
+_TEMPLATE_PATHS = {
+    f[:-len(".json")]: os.path.join(dirpath, f) 
+    for (dirpath, dirnames, filenames) in os.walk(FILE_DIR) for f in filenames
+    if f.endswith(".json")
+}
+
+TEMPLATES = {
+    template_name: _read_json(filepath) for template_name, filepath in _TEMPLATE_PATHS.items()
 }

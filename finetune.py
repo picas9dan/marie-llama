@@ -1,114 +1,79 @@
-# Adapted from https://github.com/artidoro/qlora/blob/main/qlora.py and https://github.com/tatsu-lab/stanford_alpaca/blob/main/train.py
-
-import json
 import os
 
-from transformers import Seq2SeqTrainer
+from datasets import Dataset
+from peft import LoraConfig
 import transformers
-from transformers.trainer_utils import PREFIX_CHECKPOINT_DIR
+from transformers import TrainerCallback, TrainingArguments
+from trl import SFTTrainer
 
-from arguments_schema import DataArgs, ModelArgs, TrainArgs
-from dataset_utils import get_data_module
-from model_utils import get_model_and_tokenizer
+from arguments_schema import DatasetArguments, ModelArguments
+from model_utils import get_model, get_tokenizer
 
-
-def get_last_checkpoint(output_dir: str):
-    """Retrieves the last checkpoint directory."""
-    if not os.path.isdir(output_dir):
-        return None # first training
-    
-    if os.path.exists(os.path.join(output_dir, "completed")): 
-        print('Detected that training was already completed!')
-        return None
-    
-    max_step = 0
-    for filename in os.listdir(output_dir):
-        if os.path.isdir(os.path.join(output_dir, filename)) and filename.startswith("checkpoint"):
-            max_step = max(max_step, int(filename[len("checkpoint-"):]))
-    if max_step == 0:
-        return None # training started, but no checkpoint
-    
-    checkpoint_dir = os.path.join(output_dir, f'checkpoint-{max_step}')
-    print(f"Found a previous checkpoint at: {checkpoint_dir}")
-
-    return checkpoint_dir # checkpoint found!
+from prompt_templates import TEMPLATES
 
 
-class SavePeftModelCallback(transformers.TrainerCallback):
-    def save_model(self, args, state, kwargs):
-        print("Saving PEFT checkpoint...")
-        if state.best_model_checkpoint is not None:
-            checkpoint_folder = os.path.join(state.best_model_checkpoint, "adapter_model")
-        else:
-            checkpoint_folder = os.path.join(args.output_dir, f"{PREFIX_CHECKPOINT_DIR}-{state.global_step}")
+def example_formatter_gen(template_name: str):
+    template = TEMPLATES[template_name]["prompt"] + TEMPLATES[template_name]["completion"]
 
-        peft_model_path = os.path.join(checkpoint_folder, "adapter_model")
-        kwargs["model"].save_pretrained(peft_model_path)
+    def construct_examples(examples: dict):
+        output_texts = []
 
-        pytorch_model_path = os.path.join(checkpoint_folder, "pytorch_model.bin")
-        if os.path.exists(pytorch_model_path):
-            os.remove(pytorch_model_path)
+        for i in range(len(examples["question"])):
+            example = {k: v[i] for k, v in examples.items()}        
+            text = template.format(**example)
+            output_texts.append(text)
 
+        return output_texts
+
+    return construct_examples
+
+
+class PeftSavingCallback(TrainerCallback):
     def on_save(self, args, state, control, **kwargs):
-        self.save_model(args, state, kwargs)
-        return control
+        print("Saving PEFT checkpoint...")
+        checkpoint_path = os.path.join(args.output_dir, f"checkpoint-{state.global_step}")
+        kwargs["model"].save_pretrained(checkpoint_path)
+
+        if "pytorch_model.bin" in os.listdir(checkpoint_path):
+            os.remove(os.path.join(checkpoint_path, "pytorch_model.bin"))
 
     def on_train_end(self, args, state, control, **kwargs):
-        fname = os.path.join(args.output_dir, "completed")
-        with open(fname, "a"):
-            os.utime(fname)
-
-        self.save_model(args, state, kwargs)
+        peft_model_path = os.path.join(args.output_dir, "adapter_model")
+        kwargs["model"].save_pretrained(peft_model_path)
 
 
 def train():
-    hfparser = transformers.HfArgumentParser((ModelArgs, DataArgs, TrainArgs))
+    hfparser = transformers.HfArgumentParser((ModelArguments, DatasetArguments, TrainingArguments))
     model_args, data_args, train_args = hfparser.parse_args_into_dataclasses()
-    checkpoint_dir = get_last_checkpoint(train_args.output_dir)
 
-    if checkpoint_dir:
-        model_args.lora_adapter_dir = os.path.join(checkpoint_dir, "adapter_model")
-    model, tokenizer = get_model_and_tokenizer(model_args, is_train=True)
+    model = get_model(model_args)
+    model.config.use_cache = False 
+    model.config.pretraining_tp = 1
 
-    data_module = get_data_module(data_args, tokenizer, train_args.do_eval)
-
-    trainer = Seq2SeqTrainer(
-        model=model,
-        tokenizer=tokenizer,
-        args=train_args,
-        **data_module,
+    peft_config = LoraConfig(
+        r=model_args.lora_r,
+        lora_alpha=model_args.lora_alpha,
+        lora_dropout=model_args.lora_dropout,
+        bias="none",
+        target_modules=["q_proj", "v_proj"],
+        task_type="CAUSAL_LM"
     )
-    trainer.add_callback(SavePeftModelCallback)
+    tokenizer = get_tokenizer(model_args.base_model)
+    dataset = Dataset.from_json(data_args.data_path)
+    formatting_func = example_formatter_gen(data_args.prompt_template)
+    callbacks = [PeftSavingCallback]
 
-    all_metrics = dict(run_name=train_args.run_name)
-
-    if train_args.do_train:
-        print("*** Train ***")
-        train_result = trainer.train()
-        metrics = train_result.metrics
-        trainer.log_metrics("train", metrics)
-        trainer.save_metrics("train", metrics)
-        trainer.save_metrics
-        all_metrics.update(metrics)
-
-    if train_args.do_eval:
-        print("*** Evaluate ***")
-        metrics = trainer.evaluate(metric_key_prefix="eval")
-        trainer.log_metrics("eval", metrics)
-        trainer.save_metrics("eval", metrics)
-        all_metrics.update(metrics)
-
-    if train_args.do_train or train_args.do_eval:
-        with open(os.path.join(train_args.output_dir, "metrics.json"), "w") as f:
-            f.write(json.dumps(all_metrics))
-
-    with open(os.path.join(train_args.output_dir, "train_log.json"), "w") as f:
-        f.write(json.dumps(trainer.state.log_history)) 
+    trainer = SFTTrainer(
+        model=model,
+        peft_config=peft_config,
+        tokenizer=tokenizer,
+        train_dataset=dataset,
+        formatting_func=formatting_func,
+        args=train_args,
+        callbacks=callbacks
+    )
+    trainer.train()
 
 
 if __name__ == "__main__":
-    try:
-        train()
-    except Exception as e:
-        print(e)
-        raise e
+    train()

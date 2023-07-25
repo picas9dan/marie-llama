@@ -1,42 +1,49 @@
-import transformers
-from transformers import GenerationConfig
-import torch
+import json
 
-from arguments_schema import DataArgs, GenArgs, InferArgs, ModelArgs
-from dataset_utils import CausalLmCollator, SupervisedDataset, UnsupervisedDataset
-from model_utils import get_model_and_tokenizer
-from torch.utils.data import DataLoader
+import torch
+import transformers
+from transformers.pipelines.pt_utils import KeyDataset
+from datasets import Dataset
+from tqdm.auto import tqdm
+from arguments_schema import DatasetArguments, InferenceArguments, ModelArguments
+
+from model_utils import get_model, get_tokenizer
+from prompt_templates import TEMPLATES
+
+
+def format_prompt(template_name: str, example: dict):
+    example["prompt"] = TEMPLATES[template_name]["prompt"].format(**example)
+    return example
 
 
 def infer():
-    hfparser = transformers.HfArgumentParser((ModelArgs, DataArgs, InferArgs))
-    model_args, data_args,infer_args = hfparser.parse_args_into_dataclasses()
+    hfparser = transformers.HfArgumentParser((ModelArguments, DatasetArguments, InferenceArguments))
+    model_args, data_args, infer_args = hfparser.parse_args_into_dataclasses()
 
-    model, tokenizer = get_model_and_tokenizer(model_args, is_train=False)
+    model = get_model(model_args)
     model.eval()
 
-    dataset = UnsupervisedDataset(
-        data_args=data_args, 
-        tokenizer=tokenizer, 
-        is_train=False,
-        is_supervised=False
+    tokenizer = get_tokenizer(model_args.base_model)
+
+    dataset = Dataset.from_json(data_args.data_path)
+    dataset = dataset.map(format_prompt)
+    
+    pipe = transformers.pipeline(
+        "text-generation",
+        model=model,
+        tokenizer=tokenizer,
+        eos_token_id=tokenizer.eos_token_id,
+        max_length=512,
+        torch_dtype=torch.float16,
+        device_map={"": 0}
     )
-    data_collator = CausalLmCollator(tokenizer=tokenizer)
-    dataloader = DataLoader(dataset, batch_size=infer_args.batch_size, collate_fn=data_collator)
 
     predictions = []
-    print("Generating predictions...")
-    with torch.no_grad():
-        for batch in dataloader:
-            outputs = model.generate(
-                **{k: v.to("cuda") for k, v in batch.items()},
-                max_new_tokens=256,
-            )
-            output_texts = tokenizer.batch_decode(outputs, skip_special_tokens=True)
-            predictions.extend(output_texts)
+    for out in tqdm(pipe(KeyDataset(dataset, "prompt")), batch_size=infer_args.batch_size):
+        predictions.append(out)
 
     with open(infer_args.output_file, "w") as f:
-        f.write("\n\n".join(predictions) + "\n")
+        json.dump(predictions, f)
 
 
 if __name__ == "__main__":

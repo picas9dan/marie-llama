@@ -5,3 +5,6 @@ peft
 accelerate
 scipy
 sentencepiece
+trl
+datasets
+tqdm
