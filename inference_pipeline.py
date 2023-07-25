@@ -9,6 +9,11 @@ from datasets import Dataset
 from tqdm.auto import tqdm
 
 
+def add_delimiter(example):
+    example["question"]  = example["question"] + "\n\n###\n\n"
+    return example
+
+
 def infer():
     base_model = "meta-llama/Llama-2-7b-hf"
     bnb_config = BitsAndBytesConfig(
@@ -35,6 +40,8 @@ def infer():
     tokenizer.pad_token_id = 0
 
     dataset = Dataset.from_json("./data/test_20230724.json")
+    dataset = dataset.map(add_delimiter)
+    
     pipe = transformers.pipeline(
         "text-generation",
         model=model,
