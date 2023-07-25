@@ -1,25 +1,10 @@
 import os
 
 import torch
-from transformers import LlamaForCausalLM, LlamaTokenizer, BitsAndBytesConfig
-from peft import prepare_model_for_kbit_training, LoraConfig, get_peft_model
+from transformers import LlamaForCausalLM, LlamaTokenizer, BitsAndBytesConfig, TrainerCallback, TrainingArguments
+from peft import LoraConfig
 from datasets import Dataset
-from transformers import Trainer, TrainingArguments, DataCollatorForLanguageModeling
 from trl import SFTTrainer
-
-def print_trainable_parameters(model):
-    """
-    Prints the number of trainable parameters in the model.
-    """
-    trainable_params = 0
-    all_param = 0
-    for _, param in model.named_parameters():
-        all_param += param.numel()
-        if param.requires_grad:
-            trainable_params += param.numel()
-    print(
-        f"trainable params: {trainable_params} || all params: {all_param} || trainable%: {100 * trainable_params / all_param}"
-    )
 
 
 PROMPT_TEMPLATE = "{question}\n\n###\n\n{query}"
@@ -35,7 +20,16 @@ def construct_examples(examples):
     return output_texts
 
 
-def main():
+class PeftSavingCallback(TrainerCallback):
+    def on_save(self, args, state, control, **kwargs):
+        checkpoint_path = os.path.join(args.output_dir, f"checkpoint-{state.global_step}")
+        kwargs["model"].save_pretrained(checkpoint_path)
+
+        if "pytorch_model.bin" in os.listdir(checkpoint_path):
+            os.remove(os.path.join(checkpoint_path, "pytorch_model.bin"))
+
+
+def finetune():
     base_model = "meta-llama/Llama-2-7b-hf"
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=True,
@@ -50,20 +44,27 @@ def main():
         device_map={"": 0},
         use_auth_token=os.getenv("HF_ACCESS_TOKEN"),
     )
+    model.config.use_cache = False 
+    model.config.pretraining_tp = 1
 
     peft_config = LoraConfig(
-        r=8,
-        lora_alpha=32,
+        r=64,
+        lora_alpha=16,
         target_modules=["q_proj", "v_proj"],
-        lora_dropout=0.05,
+        lora_dropout=0.1,
         bias="none",
         task_type="CAUSAL_LM"
     )
 
-    tokenizer = LlamaTokenizer.from_pretrained(base_model)
+    tokenizer = LlamaTokenizer.from_pretrained(
+        base_model,
+        use_auth_token=os.getenv("HF_ACCESS_TOKEN"),
+    )
     tokenizer.pad_token_id = tokenizer.unk_token_id
+    tokenizer.padding_side = "right"
 
     dataset = Dataset.from_json("./data/train_full_20230721.json")
+    callbacks = [PeftSavingCallback]
 
     trainer = SFTTrainer(
         model=model,
@@ -71,12 +72,25 @@ def main():
         tokenizer=tokenizer,
         train_dataset=dataset,
         formatting_func=construct_examples,
+        args=TrainingArguments(
+            per_device_train_batch_size=4,
+            gradient_accumulation_steps=4,
+            gradient_checkpointing=True,
+            warmup_steps=2,
+            learning_rate=2e-4,
+            bf16=True,
+            save_steps=10,
+            logging_steps=1,
+            output_dir="/rds/user/nmdt2/hpc-work/outputs/20230725_sft_0",
+            num_train_epochs=3,
+            optim="paged_adamw_8bit"
+        ),
+        callbacks=callbacks
     )
 
-    model.config.use_cache = False  # silence the warnings. Please re-enable for inference!
     trainer.train()
-
-    model.save_pretrained("/rds/user/nmdt2/hpc-work/outputs/20230724_minimal")
+    
+    trainer.model.save_pretrained("./outputs/sft")
 
 if __name__ == "__main__":
-    main()
+    finetune()
