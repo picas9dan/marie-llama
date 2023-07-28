@@ -6,7 +6,7 @@ import transformers
 from transformers import TrainerCallback, TrainingArguments
 from trl import SFTTrainer
 
-from arguments_schema import DatasetArguments, ModelArguments
+from llama.arguments_schema import DatasetArguments, ModelArguments
 from model_utils import get_model, get_tokenizer
 
 from prompt_templates import TEMPLATES

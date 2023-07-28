@@ -4,7 +4,7 @@ from peft import PeftModel
 from transformers import BitsAndBytesConfig, LlamaForCausalLM, LlamaTokenizer
 import torch
 
-from arguments_schema import ModelArguments
+from llama.arguments_schema import ModelArguments
 
 
 def get_model(model_args: ModelArguments):

@@ -6,7 +6,7 @@ import transformers
 from transformers.pipelines.pt_utils import KeyDataset
 from tqdm.auto import tqdm
 
-from arguments_schema import DatasetArguments, InferenceArguments, ModelArguments
+from llama.arguments_schema import DatasetArguments, InferenceArguments, ModelArguments
 from model_utils import get_model, get_tokenizer
 from prompt_templates import TEMPLATES
 
