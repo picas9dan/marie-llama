@@ -1,3 +1,5 @@
+import os
+
 from datasets import Dataset
 import transformers
 from transformers import (
@@ -8,18 +10,19 @@ from transformers import (
     Seq2SeqTrainer
 )
 
+from t5.arguments_schema import DatasetArguments, ModelArguments
 
-PREFIX = "translate to structured query: "
+
+PREFIX = "translate to SPARQL: "
 
 def train():
-    model_id = "google/flan-t5-base"
-    data_path = "./data/train_20230721.json"
+    hfparser = transformers.HfArgumentParser((ModelArguments, DatasetArguments, Seq2SeqTrainingArguments))
+    model_args, data_args, train_args = hfparser.parse_args_into_dataclasses()
 
-    model = AutoModelForSeq2SeqLM.from_pretrained(model_id)
-    tokenizer = AutoTokenizer.from_pretrained(model_id)
+    model = AutoModelForSeq2SeqLM.from_pretrained(model_args.model_path)
+    tokenizer = AutoTokenizer.from_pretrained(model_args.model_path)
 
-    dataset = Dataset.from_json(data_path)
-
+    dataset = Dataset.from_json(data_args.data_path)
 
     def preprocess_function(examples):
         sources = [PREFIX + example for example in examples["question"]]
@@ -33,18 +36,9 @@ def train():
         model=model
     )
 
-    training_args = Seq2SeqTrainingArguments(
-        output_dir="./outputs",
-        learning_rate=2e-4,
-        per_device_train_batch_size=16,
-        num_train_epochs=3,
-        bf16=True,
-        optim="paged_adamw_8bit"
-    )
-
     trainer = Seq2SeqTrainer(
         model=model,
-        args=training_args,
+        args=train_args,
         train_dataset=tokenized_ds,
         tokenizer=tokenizer,
         data_collator=data_collator,
@@ -52,7 +46,9 @@ def train():
 
     trainer.train()
 
-    trainer.model.save_pretrained("./outputs/model")
+    model_output_dir = os.path.join(train_args.output_dir, "model")
+    trainer.model.save_pretrained(model_output_dir)
+    trainer.tokenizer.save_pretrained(model_output_dir)
 
 
 if __name__ == "__main__":
