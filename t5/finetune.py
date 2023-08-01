@@ -11,9 +11,8 @@ from transformers import (
 )
 
 from t5.arguments_schema import DatasetArguments, ModelArguments
+from t5.dataset_utils import load_dataset
 
-
-PREFIX = "translate to SPARQL: "
 
 def train():
     hfparser = transformers.HfArgumentParser((ModelArguments, DatasetArguments, Seq2SeqTrainingArguments))
@@ -22,14 +21,23 @@ def train():
     model = AutoModelForSeq2SeqLM.from_pretrained(model_args.model_path)
     tokenizer = AutoTokenizer.from_pretrained(model_args.model_path)
 
-    dataset = Dataset.from_json(data_args.data_path)
+    dataset = load_dataset(data_args.data_path)
 
-    def preprocess_function(examples):
-        sources = [PREFIX + example for example in examples["question"]]
-        targets = examples["query"]
-        return tokenizer(sources, text_target=targets, max_length=512, truncation=True)
+    def _tokenize(examples):
+        model_inputs = tokenizer(
+            examples["source"], 
+            max_length=data_args.source_max_len,
+            truncation=True
+        )
+        labels = tokenizer(
+            examples["target"],
+            max_length=data_args.target_max_len,
+            truncation=True
+        )
+        model_inputs["labels"] = labels["input_ids"]
+        return model_inputs
 
-    tokenized_ds = dataset.map(preprocess_function, batched=True, remove_columns=["question", "query"])
+    tokenized_ds = dataset.map(_tokenize, batched=True, remove_columns=["source", "target"])
 
     data_collator = DataCollatorForSeq2Seq(
         tokenizer=tokenizer,
