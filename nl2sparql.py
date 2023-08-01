@@ -2,6 +2,7 @@ from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 from rel_search import RelSearchModel
 
 from t5.dataset_utils import preprocess_qn
+import sparql_processing
 
 QUERY_PREFIXES = (
     "PREFIX os: <http://www.theworldavatar.com/ontology/ontospecies/OntoSpecies.owl#>\n"
@@ -62,7 +63,7 @@ class Nl2SparqlModel:
     def postprocess(self, query: str):
         # correct relations
         # query = self.correct_rel(query)
-        # decompress graph patterns
+        query = sparql_processing.decode(query)
         query = QUERY_PREFIXES + query
         return query
 

@@ -1,5 +1,7 @@
 from datasets import Dataset
 
+import sparql_processing
+
 PREFIX = "translate to SPARQL: "
 
 
@@ -10,8 +12,7 @@ def preprocess_qn(qn: str):
 
 
 def preprocess_query(query: str):
-    # condense graph pattern
-    return query
+    return sparql_processing.encode(query)
 
 
 def preprocess_examples(examples):
