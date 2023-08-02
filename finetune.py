@@ -10,7 +10,7 @@ from transformers import (
     Seq2SeqTrainer
 )
 
-from marie.arguments_schema import DatasetArguments, ModelArguments
+from arguments_schema import DatasetArguments, ModelArguments
 from marie.data_processing.qn_processing import preprocess_qn
 from marie.data_processing.query_processing import preprocess_query
 

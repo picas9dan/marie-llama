@@ -4,7 +4,7 @@ from datasets import Dataset
 import transformers
 from tqdm.auto import tqdm
 
-from marie.arguments_schema import DatasetArguments, InferenceArguments, ModelArguments
+from arguments_schema import DatasetArguments, InferenceArguments, ModelArguments
 from marie.translation import TranslationModel
 
 
