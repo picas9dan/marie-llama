@@ -96,6 +96,12 @@ export HF_HOME=/rds/user/nmdt2/hpc-work/.cache/huggingface
 
 ### Testing
 
+#### Installation
 ```
 pip install pytest
+```
+
+#### Execute tests
+```
+pytest
 ```

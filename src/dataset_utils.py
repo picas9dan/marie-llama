@@ -1,6 +1,7 @@
 from datasets import Dataset
 
-import sparql_processing
+from src.utils.sparql_utils import preprocess_query
+
 
 PREFIX = "translate to SPARQL: "
 
@@ -11,8 +12,6 @@ def preprocess_qn(qn: str):
     return qn
 
 
-def preprocess_query(query: str):
-    return sparql_processing.encode(query)
 
 
 def preprocess_examples(examples):

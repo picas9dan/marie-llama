@@ -10,8 +10,8 @@ from transformers import (
     Seq2SeqTrainer
 )
 
-from t5.arguments_schema import DatasetArguments, ModelArguments
-from t5.dataset_utils import load_dataset
+from src.arguments_schema import DatasetArguments, ModelArguments
+from src.dataset_utils import load_dataset
 
 
 def train():

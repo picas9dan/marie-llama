@@ -1,32 +1,14 @@
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
 from rel_search import RelSearchModel
 
-from t5.dataset_utils import preprocess_qn
-import sparql_processing
+from src.dataset_utils import preprocess_qn
+import sparql_utils
 
 QUERY_PREFIXES = (
     "PREFIX os: <http://www.theworldavatar.com/ontology/ontospecies/OntoSpecies.owl#>\n"
     "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"
     "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"
 )
-
-
-def advance_idx_to_kw(text: str, kw: str, idx: int):
-    while idx < len(text) and not text.startswith(kw, idx):
-        idx += 1
-    return idx
-
-
-def advance_idx_thru_space(text: str, idx: int):
-    while idx < len(text) and text[idx].isspace():
-        idx += 1
-    return idx
-
-
-def advance_idx_to_space(text: str, idx: int):
-    while idx < len(text) and not text[idx].isspace():
-        idx += 1
-    return idx
 
 
 class TranslationModel:
@@ -62,7 +44,7 @@ class TranslationModel:
     def postprocess(self, query: str):
         # correct relations
         # query = self.correct_rel(query)
-        query = sparql_processing.decode(query)
+        query = sparql_utils.decode(query)
         query = QUERY_PREFIXES + query
         return query
 
