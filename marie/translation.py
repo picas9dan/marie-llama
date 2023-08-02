@@ -1,8 +1,9 @@
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+from marie.data_processing.qn_processing import preprocess_qn
+from marie.data_processing.query_processing import decode_query
 from marie.utils import advance_idx_thru_space, advance_idx_to_kw, advance_idx_to_space
 from rel_search import RelSearchModel
 
-from marie.dataset_utils import preprocess_qn
 
 QUERY_PREFIXES = (
     "PREFIX os: <http://www.theworldavatar.com/ontology/ontospecies/OntoSpecies.owl#>\n"
@@ -44,11 +45,11 @@ class TranslationModel:
     def postprocess(self, query: str):
         # correct relations
         # query = self.correct_rel(query)
-        query = sparql_utils.decode(query)
+        query = decode_query(query)
         query = QUERY_PREFIXES + query
         return query
 
-    def __call__(self, question: str):
+    def __call__(self, question: str, postprocess: bool = True):
         question = preprocess_qn(question)
 
         input_ids = self.tokenizer(question, return_tensors="pt").input_ids.to(
@@ -57,4 +58,6 @@ class TranslationModel:
         output_ids = self.model.generate(input_ids, max_new_tokens=self.max_new_tokens)
         query = self.tokenizer.decode(output_ids[0], skip_special_tokens=True)
 
-        return self.postprocess(query)
+        if postprocess:
+            return self.postprocess(query)
+        return query

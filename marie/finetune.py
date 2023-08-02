@@ -11,7 +11,14 @@ from transformers import (
 )
 
 from marie.arguments_schema import DatasetArguments, ModelArguments
-from marie.dataset_utils import load_dataset
+from marie.data_processing.qn_processing import preprocess_qn
+from marie.data_processing.query_processing import preprocess_query
+
+
+def preprocess_examples(examples):
+    sources = [preprocess_qn(qn) for qn in examples["question"]]
+    targets = [preprocess_query(query) for query in examples["query"]]
+    return dict(source=sources, target=targets)
 
 
 def train():
@@ -21,7 +28,8 @@ def train():
     model = AutoModelForSeq2SeqLM.from_pretrained(model_args.model_path)
     tokenizer = AutoTokenizer.from_pretrained(model_args.model_path)
 
-    dataset = load_dataset(data_args.data_path)
+    dataset = Dataset.from_json(data_args.data_path)
+    dataset = dataset.map(preprocess_examples, batched=True, remove_columns=["question", "query"])
 
     def _tokenize(examples):
         model_inputs = tokenizer(

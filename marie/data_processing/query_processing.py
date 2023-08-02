@@ -12,6 +12,8 @@ def decode_query(query: str):
 
 def remove_prefixes(query: str):
     idx = advance_idx_to_kw(query, "PREFIX")
+    if idx == len(query):
+        return query
 
     while query.startswith("PREFIX", idx):
         "PREFIX prefix: <iri>"

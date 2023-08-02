@@ -33,6 +33,10 @@ class TestQueryUtils:
                 ),
                 "SELECT *\nWHERE {?s ?p ?o}\n",
             ),
+            (
+                "SELECT *\nWHERE {?s ?p ?o}\n",
+                "SELECT *\nWHERE {?s ?p ?o}\n",
+            ),
         ],
     )
     def test_removePrefixes(self, query, expected):
