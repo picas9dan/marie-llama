@@ -1,5 +1,5 @@
 from SPARQLWrapper import SPARQLWrapper, JSON
-from src.translation import TranslationModel
+from marie.translation import TranslationModel
 
 
 class Marie:

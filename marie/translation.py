@@ -1,8 +1,8 @@
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+from marie.utils import advance_idx_thru_space, advance_idx_to_kw, advance_idx_to_space
 from rel_search import RelSearchModel
 
-from src.dataset_utils import preprocess_qn
-import sparql_utils
+from marie.dataset_utils import preprocess_qn
 
 QUERY_PREFIXES = (
     "PREFIX os: <http://www.theworldavatar.com/ontology/ontospecies/OntoSpecies.owl#>\n"

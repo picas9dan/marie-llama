@@ -1,7 +1,7 @@
 from datasets import Dataset
-from src.data_processing.qn_processing import preprocess_qn
+from marie.data_processing.qn_processing import preprocess_qn
 
-from src.data_processing.query_processing import preprocess_query
+from marie.data_processing.query_processing import preprocess_query
 
 
 

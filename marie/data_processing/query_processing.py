@@ -1,5 +1,5 @@
 
-from src.utils import advance_idx_thru_space, advance_idx_to_kw
+from marie.utils import advance_idx_thru_space, advance_idx_to_kw
 
 
 def encode_query(query: str):

@@ -1,6 +1,6 @@
 import pytest
 
-from src.data_processing.query_processing import remove_prefixes
+from marie.data_processing.query_processing import remove_prefixes
 
 
 class TestQueryUtils:

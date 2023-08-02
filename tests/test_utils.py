@@ -1,6 +1,6 @@
 import pytest
 
-from src.utils import advance_idx_thru_space, advance_idx_to_kw, advance_idx_to_space
+from marie.utils import advance_idx_thru_space, advance_idx_to_kw, advance_idx_to_space
 
 
 class TestStrUtils:

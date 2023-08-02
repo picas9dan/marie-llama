@@ -1,4 +1,4 @@
-from src.data_processing.qn_processing import preprocess_qn
+from marie.data_processing.qn_processing import preprocess_qn
 
 
 class TestDatasetUtils:
