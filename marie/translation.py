@@ -1,10 +1,9 @@
 from transformers import AutoModelForSeq2SeqLM, AutoTokenizer
+
 from marie.data_processing.qn_processing import preprocess_qn
 from marie.data_processing.query_processing import postprocess_query
-from marie.utils import advance_idx_thru_space, advance_idx_to_kw, advance_idx_to_space
-from rel_search import RelSearchModel
 
-
+# from marie.rel_search import RelSearchModel
 
 
 class TranslationModel:
@@ -23,19 +22,19 @@ class TranslationModel:
         self.max_new_tokens = max_new_tokens
         # self.rel_search_model = RelSearchModel(model=rel_search_model)
 
-    def correct_rel(self, query: str):
-        idx = advance_idx_to_kw(query, "WHERE", 0)
-        if not query.startswith("WHERE", idx):
-            return query
+    # def correct_rel(self, query: str):
+    #     idx = advance_idx_to_kw(query, "WHERE", 0)
+    #     if not query.startswith("WHERE", idx):
+    #         return query
 
-        idx = advance_idx_to_kw(query, "{", idx + len("WHERE"))
-        while idx < len(query) and query[idx] != "}":
-            # advance to the start of a triple
-            idx = advance_idx_thru_space(query, idx)
-            # advance thru the head
-            idx = advance_idx_to_space(query, idx)
-            # advance to the relation
-            idx = advance_idx_thru_space(query, idx)
+    #     idx = advance_idx_to_kw(query, "{", idx + len("WHERE"))
+    #     while idx < len(query) and query[idx] != "}":
+    #         # advance to the start of a triple
+    #         idx = advance_idx_thru_space(query, idx)
+    #         # advance thru the head
+    #         idx = advance_idx_to_space(query, idx)
+    #         # advance to the relation
+    #         idx = advance_idx_thru_space(query, idx)
 
     def __call__(self, question: str, postprocess: bool = True):
         question = preprocess_qn(question)
