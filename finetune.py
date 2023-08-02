@@ -3,16 +3,17 @@ import os
 from datasets import Dataset
 import transformers
 from transformers import (
-    AutoModelForSeq2SeqLM, 
-    AutoTokenizer, 
+    AutoModelForSeq2SeqLM,
+    AutoTokenizer,
     DataCollatorForSeq2Seq,
     Seq2SeqTrainingArguments,
-    Seq2SeqTrainer
+    Seq2SeqTrainer,
 )
 
-from arguments_schema import DatasetArguments, ModelArguments
 from marie.data_processing.qn_processing import preprocess_qn
 from marie.data_processing.query_processing import preprocess_query
+
+from arguments_schema import DatasetArguments, ModelArguments
 
 
 def preprocess_examples(examples):
@@ -22,35 +23,34 @@ def preprocess_examples(examples):
 
 
 def train():
-    hfparser = transformers.HfArgumentParser((ModelArguments, DatasetArguments, Seq2SeqTrainingArguments))
+    hfparser = transformers.HfArgumentParser(
+        (ModelArguments, DatasetArguments, Seq2SeqTrainingArguments)
+    )
     model_args, data_args, train_args = hfparser.parse_args_into_dataclasses()
 
     model = AutoModelForSeq2SeqLM.from_pretrained(model_args.model_path)
     tokenizer = AutoTokenizer.from_pretrained(model_args.model_path)
 
     dataset = Dataset.from_json(data_args.data_path)
-    dataset = dataset.map(preprocess_examples, batched=True, remove_columns=["question", "query"])
+    dataset = dataset.map(
+        preprocess_examples, batched=True, remove_columns=["question", "query"]
+    )
 
     def _tokenize(examples):
         model_inputs = tokenizer(
-            examples["source"], 
-            max_length=data_args.source_max_len,
-            truncation=True
+            examples["source"], max_length=data_args.source_max_len, truncation=True
         )
         labels = tokenizer(
-            examples["target"],
-            max_length=data_args.target_max_len,
-            truncation=True
+            examples["target"], max_length=data_args.target_max_len, truncation=True
         )
         model_inputs["labels"] = labels["input_ids"]
         return model_inputs
 
-    tokenized_ds = dataset.map(_tokenize, batched=True, remove_columns=["source", "target"])
-
-    data_collator = DataCollatorForSeq2Seq(
-        tokenizer=tokenizer,
-        model=model
+    tokenized_ds = dataset.map(
+        _tokenize, batched=True, remove_columns=["source", "target"]
     )
+
+    data_collator = DataCollatorForSeq2Seq(tokenizer=tokenizer, model=model)
 
     trainer = Seq2SeqTrainer(
         model=model,

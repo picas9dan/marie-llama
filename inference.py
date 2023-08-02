@@ -1,11 +1,11 @@
 import json
 
-from datasets import Dataset
 import transformers
 from tqdm.auto import tqdm
 
-from arguments_schema import DatasetArguments, InferenceArguments, ModelArguments
 from marie.translation import TranslationModel
+
+from arguments_schema import DatasetArguments, InferenceArguments, ModelArguments
 
 
 def infer():
