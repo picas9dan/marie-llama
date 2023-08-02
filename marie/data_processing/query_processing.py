@@ -2,11 +2,23 @@
 from marie.utils import advance_idx_thru_space, advance_idx_to_kw
 
 
+QUERY_ENCODINGS = {
+    "{": "ob",
+    "}": "cb"
+}
+
+
 def encode_query(query: str):
+    for k, v in QUERY_ENCODINGS.items():
+        query = query.replace(k, v)
+
     return query
 
 
 def decode_query(query: str):
+    for k, v in QUERY_ENCODINGS.items():
+        query = query.replace(v, k)
+
     return query
 
 

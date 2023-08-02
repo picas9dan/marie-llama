@@ -1,14 +1,18 @@
 import pytest
 
-from marie.data_processing.query_processing import remove_prefixes
+from marie.data_processing.query_processing import decode_query, encode_query, remove_prefixes
 
 
 class TestQueryUtils:
     def test_encodeQuery(self):
-        pass
+        query = "SELECT *\nWHERE { ?s ?p ?o }\n"
+        expected = "SELECT *\nWHERE ob ?s ?p ?o cb\n"
+        assert encode_query(query) == expected
 
     def test_decodeQuery(self):
-        pass
+        query = "SELECT *\nWHERE ob ?s ?p ?o cb\n"
+        expected = "SELECT *\nWHERE { ?s ?p ?o }\n"
+        assert decode_query(query) == expected
 
     @pytest.mark.parametrize(
         "query, expected",
@@ -18,8 +22,7 @@ class TestQueryUtils:
                     "PREFIX os: <http://www.theworldavatar.com/ontology/ontospecies/OntoSpecies.owl#>\n"
                     "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"
                     "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"
-                    "SELECT *\n"
-                    "WHERE {?s ?p ?o}\n"
+                    "SELECT *\nWHERE {?s ?p ?o}\n"
                 ),
                 "SELECT *\nWHERE {?s ?p ?o}\n",
             ),
@@ -28,8 +31,7 @@ class TestQueryUtils:
                     "PREFIX os: \n<http://www.theworldavatar.com/ontology/ontospecies/OntoSpecies.owl#>\n"
                     "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"
                     "PREFIX \nrdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"
-                    "SELECT *\n"
-                    "WHERE {?s ?p ?o}\n"
+                    "SELECT *\nWHERE {?s ?p ?o}\n"
                 ),
                 "SELECT *\nWHERE {?s ?p ?o}\n",
             ),
