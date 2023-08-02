@@ -90,3 +90,12 @@ Per [recommendation by CSD3](https://docs.hpc.cam.ac.uk/hpc/user-guide/io_manage
 ```
 export HF_HOME=/rds/user/nmdt2/hpc-work/.cache/huggingface
 ``` 
+
+
+## Development
+
+### Testing
+
+```
+pip install pytest
+```

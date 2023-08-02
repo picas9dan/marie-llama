@@ -9,3 +9,5 @@ trl
 datasets
 tqdm
 levenshtein
+nltk
+sparqlwrapper

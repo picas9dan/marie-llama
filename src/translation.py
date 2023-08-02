@@ -29,7 +29,7 @@ def advance_idx_to_space(text: str, idx: int):
     return idx
 
 
-class Nl2SparqlModel:
+class TranslationModel:
     def __init__(
         self,
         model_path: str = "google/flan-t5-base",
@@ -58,7 +58,6 @@ class Nl2SparqlModel:
             idx = advance_idx_to_space(query, idx)
             # advance to the relation
             idx = advance_idx_thru_space(query, idx)
-
 
     def postprocess(self, query: str):
         # correct relations
