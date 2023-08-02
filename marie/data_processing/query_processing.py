@@ -3,9 +3,11 @@ from marie.utils import advance_idx_thru_space, advance_idx_to_kw
 
 
 QUERY_ENCODINGS = {
-    "{": "ob",
-    "}": "cb"
+    "{": " ob ",
+    "}": " cb ",
+    "?": "var_"
 }
+QUERY_DECODINGS = {v: k for k, v in QUERY_ENCODINGS.items()}
 
 QUERY_PREFIXES = (
     "PREFIX os: <http://www.theworldavatar.com/ontology/ontospecies/OntoSpecies.owl#>\n"
@@ -55,5 +57,5 @@ def preprocess_query(query: str):
 
 def postprocess_query(query: str):
     query = decode_query(query)
-    query = add_prefixes(query)
+    # query = add_prefixes(query)
     return query

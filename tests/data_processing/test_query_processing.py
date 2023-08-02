@@ -11,11 +11,11 @@ from marie.data_processing.query_processing import (
 class TestQueryUtils:
     def test_encodeQuery(self):
         query = "SELECT *\nWHERE { ?s ?p ?o }\n"
-        expected = "SELECT *\nWHERE ob ?s ?p ?o cb\n"
+        expected = "SELECT *\nWHERE  ob  var_s var_p var_o  cb \n"
         assert encode_query(query) == expected
 
     def test_decodeQuery(self):
-        query = "SELECT *\nWHERE ob ?s ?p ?o cb\n"
+        query = "SELECT *\nWHERE  ob  var_s var_p var_o  cb \n"
         expected = "SELECT *\nWHERE { ?s ?p ?o }\n"
         assert decode_query(query) == expected
 
