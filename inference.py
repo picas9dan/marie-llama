@@ -28,7 +28,7 @@ def infer():
 
     data_out = [{**datum, "prediction": pred} for datum, pred in zip(data, preds)]
     with open(infer_args.out_file, "w") as f:
-        json.dump(data_out)
+        json.dump(data_out, f)
 
 
 if __name__ == "__main__":
