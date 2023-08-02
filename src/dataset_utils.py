@@ -1,6 +1,6 @@
 from datasets import Dataset
 
-from src.utils.sparql_utils import preprocess_query
+from src.utils.query_utils import preprocess_query
 
 
 PREFIX = "translate to SPARQL: "
