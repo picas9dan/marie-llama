@@ -7,6 +7,12 @@ QUERY_ENCODINGS = {
     "}": "cb"
 }
 
+QUERY_PREFIXES = (
+    "PREFIX os: <http://www.theworldavatar.com/ontology/ontospecies/OntoSpecies.owl#>\n"
+    "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n"
+    "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n"
+)
+
 
 def encode_query(query: str):
     for k, v in QUERY_ENCODINGS.items():
@@ -37,7 +43,17 @@ def remove_prefixes(query: str):
     return query[idx:]
 
 
+def add_prefixes(query: str):
+    return QUERY_PREFIXES + query
+
+
 def preprocess_query(query: str):
     query = remove_prefixes(query)
-    return encode_query(query)
+    query = encode_query(query)
+    return query
 
+
+def postprocess_query(query: str):
+    query = decode_query(query)
+    query = add_prefixes(query)
+    return query
