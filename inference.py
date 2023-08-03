@@ -8,6 +8,10 @@ from marie.translation import TranslationModel
 from arguments_schema import DatasetArguments, InferenceArguments, ModelArguments
 
 
+def rename_dict_keys(d: dict, mappings: dict):
+    return {mappings[k] if k in mappings else k: v for k, v in d.items()}
+
+
 def infer():
     hfparser = transformers.HfArgumentParser(
         (ModelArguments, DatasetArguments, InferenceArguments)
@@ -26,7 +30,13 @@ def infer():
         pred = trans_model(datum["question"], postprocess=infer_args.postprocess)
         preds.append(pred)
 
-    data_out = [{**datum, "prediction": pred} for datum, pred in zip(data, preds)]
+    data_out = [
+        {
+            **rename_dict_keys(datum, dict(query="gt")),
+            "prediction": pred,
+        }
+        for datum, pred in zip(data, preds)
+    ]
     with open(infer_args.out_file, "w") as f:
         json.dump(data_out, f, indent=4)
 
