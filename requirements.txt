@@ -9,5 +9,6 @@ trl
 datasets
 tqdm
 levenshtein
-nltk
 sparqlwrapper
+sacrebleu
+scikit-learn
