@@ -39,6 +39,19 @@
 
 ## Fine-tuning
 
+### Weight & Biases configuration for monitoring
+
+1. [Sign up](https://wandb.ai/site) for a Weights & Biases account. 
+1. Locate your API key on the [Authorize page](https://wandb.ai/authorize).
+1. Execute the following command and specify the API key.
+   ```
+   wandb login
+   ```
+1. Set the Weights & Biases project name as an environment variable.
+   ```
+   export WANDB_PROJECT=marie
+   ```
+
 For a list all arguments that can be passed to the fine-tune script, see classes `arguments_schema.ModelArguments`, `arguments_schema.DatasetArguments` and `transformers.TrainingArguments`.
 
 Example usage:

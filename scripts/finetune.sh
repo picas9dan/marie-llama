@@ -7,4 +7,5 @@ python finetune.py \
     --num_train_epochs 3 \
     --optim paged_adamw_32bit \
     --learning_rate 0.0002 \
-    --logging_steps 1
+    --logging_steps 1 \
+    --report_to wandb
