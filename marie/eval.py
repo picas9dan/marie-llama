@@ -17,7 +17,7 @@ def get_bleu_metrics(refs: List[List[str]], sys: List[str]):
 
 
 def get_translation_metrics(data: List[dict]):
-    queries = [normalise_space(datum["query"]) for datum in data]
+    queries = [normalise_space(datum["sparql_query"]) for datum in data]
     predictions = [normalise_space(datum["prediction"]) for datum in data]
 
     return dict(

@@ -32,7 +32,7 @@
 [
    {
       "question": "",
-      "query": ""
+      "sparql_query": ""
    }
 ]
 ```

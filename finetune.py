@@ -17,7 +17,7 @@ from marie.model_utils import get_model_and_tokenizer
 
 def preprocess_examples(examples):
     sources = [preprocess_qn(qn) for qn in examples["question"]]
-    targets = [preprocess_query(query) for query in examples["query"]]
+    targets = [preprocess_query(query) for query in examples["sparql_query"]]
     return dict(source=sources, target=targets)
 
 
@@ -31,7 +31,7 @@ def train():
 
     dataset = Dataset.from_json(data_args.data_path)
     dataset = dataset.map(
-        preprocess_examples, batched=True, remove_columns=["question", "query"]
+        preprocess_examples, batched=True, remove_columns=["question", "sparql_query"]
     )
 
     def _tokenize(examples):
