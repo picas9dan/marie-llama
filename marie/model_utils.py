@@ -34,7 +34,7 @@ def get_model(model_args: ModelArguments):
             lora_alpha=model_args.lora_alpha,
             lora_dropout=model_args.lora_dropout,
             bias="none",
-            target_modules=["q_proj", "v_proj"],
+            target_modules=["q", "v"],
             task_type=TaskType.SEQ_2_SEQ_LM
         )
 
