@@ -5,7 +5,7 @@ from tqdm.auto import tqdm
 
 from marie.translation import TranslationModel
 
-from arguments_schema import DatasetArguments, InferenceArguments, ModelArguments
+from marie.arguments_schema import DatasetArguments, InferenceArguments, ModelArguments
 
 
 def rename_dict_keys(d: dict, mappings: dict):
