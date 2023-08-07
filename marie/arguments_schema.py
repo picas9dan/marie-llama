@@ -1,9 +1,19 @@
 from dataclasses import dataclass, field
+from typing import Optional
 
 
 @dataclass
 class ModelArguments:
     model_path: str
+    # quantization hyperparams
+    bits: Optional[int] = field(
+        default=None,
+        metadata={"help": "How many bits to use."}
+    )
+    # lora hyperparams
+    lora_r: Optional[int] = field(default=None)
+    lora_alpha: Optional[float] = field(default=None)
+    lora_dropout: Optional[float] = field(default=None)
 
 
 @dataclass

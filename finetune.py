@@ -3,8 +3,6 @@ import os
 from datasets import Dataset
 import transformers
 from transformers import (
-    AutoModelForSeq2SeqLM,
-    AutoTokenizer,
     DataCollatorForSeq2Seq,
     Seq2SeqTrainingArguments,
     Seq2SeqTrainer,
@@ -13,7 +11,8 @@ from transformers import (
 from marie.data_processing.qn_processing import preprocess_qn
 from marie.data_processing.query_processing import preprocess_query
 
-from arguments_schema import DatasetArguments, ModelArguments
+from marie.arguments_schema import DatasetArguments, ModelArguments
+from marie.model_utils import get_model_and_tokenizer
 
 
 def preprocess_examples(examples):
@@ -28,8 +27,7 @@ def train():
     )
     model_args, data_args, train_args = hfparser.parse_args_into_dataclasses()
 
-    model = AutoModelForSeq2SeqLM.from_pretrained(model_args.model_path)
-    tokenizer = AutoTokenizer.from_pretrained(model_args.model_path)
+    model, tokenizer = get_model_and_tokenizer(model_args)
 
     dataset = Dataset.from_json(data_args.data_path)
     dataset = dataset.map(
