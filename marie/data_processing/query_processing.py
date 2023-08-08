@@ -1,27 +1,22 @@
-
 from marie.utils import advance_idx_thru_space, advance_idx_to_kw
 
 
-QUERY_ENCODINGS = {
-    "{": " ob ",
-    "}": " cb ",
-    "?": "var_"
-}
-QUERY_DECODINGS = {v: k for k, v in QUERY_ENCODINGS.items()}
+QUERY_ENCODINGS = {"{": " op_br ", "}": " cl_br ", "?": "var_"}
+QUERY_DECODINGS = {v.strip(): k for k, v in QUERY_ENCODINGS.items()}
+
+
+def replace_multi(text: str, mapper: dict):
+    for k, v in mapper.items():
+        text = text.replace(k, v)
+    return text
 
 
 def encode_query(query: str):
-    for k, v in QUERY_ENCODINGS.items():
-        query = query.replace(k, v)
-
-    return query
+    return replace_multi(query, QUERY_ENCODINGS)
 
 
 def decode_query(query: str):
-    for k, v in QUERY_ENCODINGS.items():
-        query = query.replace(v, k)
-
-    return query
+    return replace_multi(query, QUERY_DECODINGS)
 
 
 def remove_prefixes(query: str):

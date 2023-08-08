@@ -8,14 +8,30 @@ from marie.data_processing.query_processing import (
 
 
 class TestQueryUtils:
-    def test_encodeQuery(self):
-        query = "SELECT *\nWHERE { ?s ?p ?o }\n"
-        expected = "SELECT *\nWHERE  ob  var_s var_p var_o  cb \n"
+    @pytest.mark.parametrize(
+        "query, expected",
+        [
+            (
+                "SELECT *\nWHERE { ?s ?p ?o }\n",
+                "SELECT *\nWHERE  op_br  var_s var_p var_o  cl_br \n",
+            ),
+            (
+                "SELECT *\nWHERE { ?s ?p ?o FILTER()}\n",
+                "SELECT *\nWHERE  op_br  var_s var_p var_o FILTER() cl_br \n",
+            ),
+        ],
+    )
+    def test_encodeQuery(self, query, expected):
         assert encode_query(query) == expected
 
-    def test_decodeQuery(self):
-        query = "SELECT *\nWHERE  ob  var_s var_p var_o  cb \n"
-        expected = "SELECT *\nWHERE { ?s ?p ?o }\n"
+    @pytest.mark.parametrize(
+            "query, expected",
+            [
+                ("SELECT *\nWHERE op_br var_s var_p var_o cl_br\n", "SELECT *\nWHERE { ?s ?p ?o }\n"),
+                ("SELECT *\nWHERE op_br var_s var_p var_o FILTER()cl_br\n", "SELECT *\nWHERE { ?s ?p ?o FILTER()}\n")
+            ]
+    )
+    def test_decodeQuery(self, query, expected):
         assert decode_query(query) == expected
 
     @pytest.mark.parametrize(
