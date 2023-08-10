@@ -1,8 +1,8 @@
 import pytest
 
 from marie.data_processing.query_processing import (
-    decode_query,
-    encode_query,
+    decode_special_chars,
+    encode_special_chars,
     remove_prefixes,
 )
 
@@ -22,7 +22,7 @@ class TestQueryUtils:
         ],
     )
     def test_encodeQuery(self, query, expected):
-        assert encode_query(query) == expected
+        assert encode_special_chars(query) == expected
 
     @pytest.mark.parametrize(
             "query, expected",
@@ -32,7 +32,7 @@ class TestQueryUtils:
             ]
     )
     def test_decodeQuery(self, query, expected):
-        assert decode_query(query) == expected
+        assert decode_special_chars(query) == expected
 
     @pytest.mark.parametrize(
         "query, expected",

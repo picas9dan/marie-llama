@@ -1,9 +1,10 @@
 
 from typing import List
 from sacrebleu.metrics import BLEU
-from sklearn.base import accuracy_score
-from sklearn.metrics import precision_recall_fscore_support
+from sklearn.metrics import precision_recall_fscore_support, accuracy_score
 from sklearn.preprocessing import MultiLabelBinarizer
+
+from marie.data_processing.query_processing import remove_prefixes
 
 
 def normalise_space(text: str):
@@ -17,7 +18,7 @@ def get_bleu_metrics(refs: List[List[str]], sys: List[str]):
 
 
 def get_translation_metrics(data: List[dict]):
-    queries = [normalise_space(datum["sparql_query"]) for datum in data]
+    queries = [normalise_space(remove_prefixes(datum["gt"])) for datum in data]
     predictions = [normalise_space(datum["prediction"]) for datum in data]
 
     return dict(
@@ -28,6 +29,7 @@ def get_translation_metrics(data: List[dict]):
 
 def get_retrieval_performance_metrics(gt_list: List[list], predictions_list: List[list]):
     mlb = MultiLabelBinarizer()
+    # TODO: convert to non-None, hashable type
     multilabel_encodings = mlb.fit_transform(gt_list + predictions_list)
     gt_encodings = multilabel_encodings[:len(gt_list)]
     pred_encodings = multilabel_encodings[len(gt_list):]

@@ -1,4 +1,4 @@
-from SPARQLWrapper import SPARQLWrapper, JSON
+from SPARQLWrapper import POST, SPARQLWrapper, JSON
 
 QUERY_PREFIXES = (
     "PREFIX os: <http://www.theworldavatar.com/ontology/ontospecies/OntoSpecies.owl#>\n"
@@ -11,6 +11,7 @@ class KgClient:
     def __init__(self, kg_endpoint: str):
         sparql = SPARQLWrapper(kg_endpoint)
         sparql.setReturnFormat(JSON)
+        sparql.setMethod(POST)
         self.sparql = sparql
 
     def query(self, query: str, add_prefixes=True):

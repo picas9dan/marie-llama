@@ -11,11 +11,11 @@ def replace_multi(text: str, mapper: dict):
     return text
 
 
-def encode_query(query: str):
+def encode_special_chars(query: str):
     return replace_multi(query, QUERY_ENCODINGS)
 
 
-def decode_query(query: str):
+def decode_special_chars(query: str):
     return replace_multi(query, QUERY_DECODINGS)
 
 
@@ -36,10 +36,10 @@ def remove_prefixes(query: str):
 
 def preprocess_query(query: str):
     query = remove_prefixes(query)
-    query = encode_query(query)
+    query = encode_special_chars(query)
     return query
 
 
 def postprocess_query(query: str):
-    query = decode_query(query)
+    query = decode_special_chars(query)
     return query
